@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+.DS_Store
+dist/
+.framecore-open-assets/
+runtime-state/
+downloads/
+*.asset.json
+*.key

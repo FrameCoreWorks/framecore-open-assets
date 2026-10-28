@@ -1,0 +1,17 @@
+{
+  "name": "framecore-open-assets",
+  "owner": {
+    "name": "FrameCore Works",
+    "url": "https://github.com/FrameCoreWorks"
+  },
+  "description": "Standalone FrameCore Open Assets marketplace. Creative Studio is optional.",
+  "plugins": [
+    {
+      "name": "framecore-open-assets",
+      "source": "./plugins/framecore-open-assets",
+      "description": "Find free media through official keyless APIs with rights gates, verified downloads and source records.",
+      "version": "0.2.1",
+      "category": "productivity"
+    }
+  ]
+}
