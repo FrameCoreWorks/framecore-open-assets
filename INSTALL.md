@@ -13,14 +13,39 @@ Run the bundled `status` command before sourcing media. Install missing dependen
 
 ## ChatGPT Work
 
-1. Build the single-plugin archive with `python3 tools/package.py`.
+1. Build the single-plugin archive with `python3 tools/package.py` where code execution has this repository; otherwise build it from files read as text ([Update without a ZIP](#update-without-a-zip-owner-decision-2026-10-29)). Never ask the user to upload a ZIP.
 2. In Plugin Creator, resolve any existing **FrameCore Open Assets** plugin before saving. Inspect its current release and files. Update that existing identity with its current release guard; create a new plugin only when the user wants an installation and none exists.
-3. Upload the generated ZIP, not a ZIP of the whole repository. Verify the returned release, component diagnostics and stored file contents.
+3. Give Plugin Creator the generated ZIP from code execution, not a ZIP of the whole repository. Verify the returned release, component diagnostics and stored file contents.
 4. Resolve the installed `open-assets` skill in the actual host, then run its runtime `status`.
 
 The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.3.0 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
 
 Ordinary ChatGPT without code execution or permitted network access can plan the work but cannot execute the CLI. Work execution evidence does not establish readiness in another host.
+
+## Update without a ZIP (owner decision 2026-10-29)
+
+The update runs on its own: never download a release ZIP, never ask the owner to attach or upload a file. ChatGPT
+Work has no network in code execution and its update tool does not take a URL, but it reads repository files as
+text through the GitHub connector, so the update is built there:
+
+1. Resolve `main` to one full commit. List `plugins/framecore-open-assets/` recursively at that commit through the connector;
+   each entry carries its git blob `sha` and `size`. Save the listing as `{"tree": [{"path", "type": "blob",
+   "sha", "size"}]}` (NEW). Do the same at the commit that released the saved version (the commit named "Open Assets <version>" in the history) for OLD; without
+   it the baseline is unknown and nothing is deleted.
+2. Read `tools/hosted_update.py` at the pinned commit through the connector and save it in code execution (standard library
+   only, no network).
+3. With the saved plugin's files in code execution:
+   `python3 hosted_update.py plan --new NEW.json --old OLD.json --prefix plugins/framecore-open-assets --saved SAVED_DIR --out plan.json`.
+4. Read every `fetch` path from `plugins/framecore-open-assets/<path>` through the connector and save it unchanged under the same
+   relative path (a binary file as `<path>.b64` with base64 content).
+5. `python3 hosted_update.py pack --new NEW.json --prefix plugins/framecore-open-assets --plan plan.json --files FETCHED_DIR --out delta.zip`
+   checks every file against its git blob hash and writes `delta.zip` plus `delta.zip.json`. A mismatch stops it
+   with the path; read that file again unchanged.
+6. Pass `delta.zip` from code execution to the update tool with the plan's `delete_paths` under the current
+   release guard (if it cannot take a code-execution file, pass the same verified files as file contents). Merge
+   `review` paths by hand. Read back the affected files and confirm the deleted paths are absent.
+
+A first installation follows the same steps without `--old` and `--saved`: the plan then reads every file.
 
 ## Codex
 
