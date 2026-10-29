@@ -8,8 +8,8 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / 'plugins/framecore-open-assets'
-TOP_FILES = {'plugin.json', 'providers.json', 'README.md', 'CHANGELOG.md', 'LICENSE', 'NOTICE'}
-TOP_DIRS = {'.claude-plugin', '.codex-plugin', 'skills', 'scripts', 'tests'}
+TOP_FILES = {'plugin.json', 'providers.json', 'capabilities.json', 'README.md', 'CHANGELOG.md', 'LICENSE', 'NOTICE'}
+TOP_DIRS = {'.claude-plugin', '.codex-plugin', 'contracts', 'skills', 'scripts', 'tests'}
 
 
 def source_files():

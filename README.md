@@ -2,7 +2,7 @@
 
 Standalone asset-sourcing plugin for **ChatGPT Work, Codex and Claude**, maintained by FrameCore Works. Find media through documented public APIs, check each asset's rights, and download verified files with source and attribution records.
 
-**Current plugin version: 0.2.1.** The 61 files in `plugins/framecore-open-assets/` reproduce the current ChatGPT Work release byte for byte. This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, Earshot and FrameCut are optional consumers of its provenance records; none is required to run this plugin.
+**Current plugin version: 0.3.0** (source; the hosted ChatGPT Work release is still 0.2.1 until it is updated, see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
 
 ## Start here
 

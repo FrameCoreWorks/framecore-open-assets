@@ -16,8 +16,27 @@ has an exact provider URL and label, with byte count or SHA-256 when advertised.
 `download_url`, transformed CDN hostname or blanket site licence is accepted.
 
 Downloads add selected variant, local path, SHA-256, byte count, response headers, decoded dimensions
-or audio/video properties, rights-review note, SA choice and `technical_test_only`. Save the sidecar
+or audio/video properties, rights-review note, SA choice and `technical_test_only`. Since 0.3.0 the sidecar
+also records `host`, `model`, `runtime_version`, the runtime `fingerprint`, `search_utc`, `search_query`,
+the caller's `task_id` (or null), `trace_sha256` and `hash_source` (`provider` when the provider
+advertised a SHA-256 that matched, otherwise `local_only`). These fields are additive; existing keys
+keep their meaning. Save the sidecar
 with the file. The sidecar is provenance, not a model/property release or a guarantee of copyright.
+
+## Task envelope
+
+Every command accepts `--envelope-out <new file>`, `--task-id`, `--requester name@version` and `--owner`.
+The envelope is a `framecore-task-result/1` document defined by
+[the shared schema](../../../contracts/framecore-task.schema.json); stdout is unchanged. It lists the
+signed search file as input, the media file and its sidecar as outputs with SHA-256 and bytes, the
+asset licence/attribution block, decode and hash evidence, warnings, errors and checks that did not run
+(listening or visual review, reading the licence page). `status` is `succeeded`, `refused` (a policy or
+rights gate), `blocked` (missing decoder) or `failed`. Without `--task-id` the envelope is marked
+`standalone`. The envelope path must be new and outside the package; it is checked before any request.
+Callers find the operations and flags in [capabilities.json](../../../capabilities.json).
+
+A `--technical-only` verification proves transport and decoding only. It never unlocks a later
+production `download` for that host, provider and category.
 
 ## Rights
 
@@ -36,10 +55,21 @@ conservative pacing apply even when a provider publishes no numeric quota. One c
 ## Errors, pacing and cache
 
 Exit 0 means the command completed, not that every result is commercially cleared. Exit 2 produces
-JSON with `status`, `error`, `message`, request `trace` and `next_action`. Typical errors are
-`unknown_provider`, `rights_blocked`, `host_not_verified`, `cloudflare_challenge`, `access_denied`,
-`rate_limited`, `transport_error`, `html_response`, `unapproved_host`, `size_limit`, `hash_mismatch`,
-`decoder_missing`, `decode_failed`, `output_exists` and `untrusted_result`.
+JSON with `status`, `error`, `message`, request `trace` and `next_action`. The complete error codes:
+
+- Request and policy: `unknown_provider`, `policy_hold`, `invalid_model`, `missing_hypothesis`,
+  `input_limit`, `unsupported_category`, `invalid_index`, `host_mismatch`, `host_not_verified`,
+  `rights_blocked`, `daily_quota`, `busy`.
+- Provenance and outputs: `untrusted_result`, `stale_result`, `result_size`, `output_exists`,
+  `package_output`, `provider_mismatch`.
+- Network: `unsafe_url`, `unapproved_host`, `request_budget`, `redirect_limit`, `cloudflare_challenge`,
+  `access_denied`, `rate_limited`, `server_error`, `http_error`, `transport_error`, `html_response`,
+  `invalid_json`, `api_error`, `size_limit`, `size_or_time_limit`.
+- Files and decoding: `hash_mismatch`, `size_mismatch`, `wrong_media_type`, `decoder_missing`,
+  `unsupported_media`, `not_media`, `decode_failed`, `pixel_limit`, `archive_limit`, `archive_crc`,
+  `unsupported_archive`.
+- Envelope: `invalid_envelope` (the envelope did not match the schema and was not written).
+- Anything else at the CLI boundary: `invalid_input_or_response`.
 
 No automatic retry. A manually considered retry is limited to one additional attempt for a transient
 failure, with a named hypothesis and provider Retry-After respected. No challenge/auth/rate bypass.

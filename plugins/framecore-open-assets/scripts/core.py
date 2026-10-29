@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 import zipfile
 
-VERSION = '0.2.1'
+VERSION = '0.3.0'
 ROOT = Path(__file__).resolve().parents[1]
 CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/'
 PDM = 'https://creativecommons.org/publicdomain/mark/1.0/'
@@ -84,12 +84,12 @@ class Client:
             raise Refused('policy_hold', self.policy['reason'])
         if not model.strip() or any(ord(c) < 32 for c in model):
             raise Refused('invalid_model', 'Supply the actual agent model identifier')
-        self.state, self.host, self.fresh = Path(state), host, fresh
+        self.state, self.host, self.model, self.fresh = Path(state), host, model, fresh
         if ROOT == self.state.resolve() or ROOT in self.state.resolve().parents:
             raise Refused('package_output', 'Keep operational state outside the plugin package')
         self.state.mkdir(parents=True, exist_ok=True)
         self.ua = (f'FrameCoreOpenAssets/{VERSION} '
-                   '(https://github.com/FrameCoreWorks/framecore-works-creative-studio; '
+                   '(https://github.com/FrameCoreWorks/framecore-open-assets; '
                    f'host={host}; model={model})')
         self.trace = []
         self.requests = 0
@@ -336,7 +336,8 @@ def decode(path):
             'codecs': [s.get('codec_name') for s in streams], 'full_decode': True}
 
 
-def download(client, item, target, choice=0, accept_sa=False, review_note=None, max_bytes=MAX_FILE, technical_only=False):
+def download(client, item, target, choice=0, accept_sa=False, review_note=None, max_bytes=MAX_FILE, technical_only=False,
+             provenance=None):
     if item['provider'] != client.provider:
         raise Refused('provider_mismatch', 'Result belongs to another provider')
     status = item['rights_status']
@@ -391,7 +392,12 @@ def download(client, item, target, choice=0, accept_sa=False, review_note=None, 
                   'sha256': digest, 'bytes': len(body), 'response_headers': headers,
                   'verification': measured, 'rights_review_note': review_note,
                   'share_alike_accepted': accept_sa, 'technical_test_only': technical_only,
-                  'downloaded_utc': utc()}
+                  'downloaded_utc': utc(),
+                  # Additive provenance (0.3.0): consumers read by key, so existing fields keep their meaning.
+                  'hash_source': 'provider' if v.get('sha256') else 'local_only',
+                  'host': client.host, 'model': client.model, 'runtime_version': VERSION,
+                  'trace_sha256': hashlib.sha256(json.dumps(client.trace, sort_keys=True).encode()).hexdigest(),
+                  **{k: val for k, val in (provenance or {}).items() if k not in item}}
         created_target = created_sidecar = False
         try:
             with target.open('xb') as f:

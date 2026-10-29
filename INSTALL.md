@@ -1,6 +1,6 @@
 # Installation and local use
 
-This repository contains only FrameCore Open Assets. Creative Studio, Earshot and FrameCut are optional integrations.
+This repository contains only FrameCore Open Assets. Creative Studio, FrameCut and FrameCore Works Toolbox are optional integrations; this plugin never requires or calls them.
 
 ## Requirements
 
@@ -18,7 +18,7 @@ Run the bundled `status` command before sourcing media. Install missing dependen
 3. Upload the generated ZIP, not a ZIP of the whole repository. Verify the returned release, component diagnostics and stored file contents.
 4. Resolve the installed `open-assets` skill in the actual host, then run its runtime `status`.
 
-The initial repository import already matches the installed 0.2.1 release. Importing the repository is not a reason to republish identical files or create a duplicate. A subsequent update requires a newer plugin version and reconciliation if the hosted release changed.
+The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.3.0 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
 
 Ordinary ChatGPT without code execution or permitted network access can plan the work but cannot execute the CLI. Work execution evidence does not establish readiness in another host.
 

@@ -1,14 +1,16 @@
 ---
 name: open-assets
-description: Find and download free images, illustrations, textures, silhouettes, audio, music, sound effects and video through documented public APIs without accounts or keys. Use for asset sourcing, licence and attribution records, provider readiness, and media handoffs to Creative Studio or other editors. Check provider, asset and host eligibility separately; explain category gaps and actual request failures.
+description: Find and download free images, illustrations, textures, silhouettes, audio, music, sound effects and video through documented public APIs without accounts or keys. Use for asset sourcing, licence and attribution records, provider readiness, and media handoffs to Creative Studio, Toolbox or other editors, standalone or from a caller's task envelope. Check provider, asset and host eligibility separately; explain category gaps and actual request failures.
 ---
 
 # FrameCore Open Assets
 
 Respond in the user's language. On a bare invocation, briefly explain that you can find free media,
 check the source and licence, and save verified files; ask which material the user needs.
-For a direct task, begin with that task. Work independently or beside Creative Studio, which retains
-the creative brief, approvals and final review. All fully qualified providers are in scope; never
+For a direct task, begin with that task. Standalone is the default; nothing else needs to be installed.
+When Creative Studio (or another caller) sends a task, it keeps the creative brief, approvals and final
+review: pass its task id with `--task-id`, its `name@version` with `--requester`, `--owner` when known, and write
+the result envelope with `--envelope-out` (see [the contract](references/contract.md#task-envelope)). All fully qualified providers are in scope; never
 invent a small provider-count cap.
 
 Resolve `<runtime>` as this plugin's `../../scripts/runtime.py` relative to this skill directory.
@@ -109,9 +111,12 @@ clients' usage, so the provider's 429 always wins.
 
 Return working file links, licence/source/attribution, useful rendition facts, decoder evidence and
 remaining limitations. A decoded file is not a listening, visual-quality or suitability review.
-Pass the asset sidecars to Studio, FrameCut, Earshot or another production owner. Earshot imports eligible audio with its `real-sound/scripts/import_open_assets.py`, checks byte identity and can emit a Studio source manifest. It can assess
-audio quality; Open Assets does not generate, mix or claim to hear it. Do not publish downloaded media
-to GitHub or upload it to another service without task-specific authorization.
+Pass the asset sidecars to the caller or another production owner (Studio, FrameCut). Any consumer
+of the source-record format can import them; Earshot through FrameCore Works Toolbox is one, with a
+narrower audio rights policy (CC0, PDM, CC BY 2.0-4.0, `eligible` only). Open Assets never calls
+another plugin itself. Consumers such as Earshot may assess audio quality; Open Assets does not
+generate, mix or claim to hear it. Do not publish downloaded media to GitHub or upload it to another
+service without task-specific authorization.
 
 Record failures as FAIL, unexecuted host/category checks as NOT_RUN and unresolved facts as Unknown.
 Never infer Claude readiness from Work tests or installed-client behavior from package validation.

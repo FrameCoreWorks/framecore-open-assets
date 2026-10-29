@@ -1,4 +1,10 @@
-# Validation of the initial standalone import
+# Validation
+
+## 0.3.0 source (2026-10-29)
+
+Execution environment: Claude Code cloud container, Linux, Python 3.13.17, Pillow 12.3.0, FFmpeg present. `python3 tools/check.py`: PASS (runtime 19, providers 7, package 4, contract 17 tests; reproducible ZIP; extracted runtime status). Hosted ChatGPT Work update to 0.3.0: pending (owner step, see the Creative Studio repository's update prompt). Installed-client tests in Claude and Codex: NOT_RUN. Live provider requests: NOT_RUN.
+
+## Initial standalone import (0.2.1)
 
 Date: 2026-10-28. Execution environment: ChatGPT Work, Linux, Python 3.12.14, Pillow 12.3.0, PyYAML 6.0.3.
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0, 2026-10-29
+
+- Optional `framecore-task-result/1` envelope (`--envelope-out`, `--task-id`, `--requester`, `--owner`) defined by
+  the shared schema in `contracts/`, and a `capabilities.json` discovery manifest. Stdout and existing flags are unchanged.
+- The `.asset.json` sidecar adds `host`, `model`, `runtime_version`, `fingerprint`, `search_utc`, `search_query`,
+  `task_id`, `trace_sha256` and `hash_source`; existing fields are unchanged.
+- A technical-only verification no longer unlocks a production `download`.
+- Handoff text names Toolbox's built-in Earshot capability instead of a separate Earshot plugin path;
+  repository URLs point to this repository; the contract lists every error code.
+
 ## 0.2.1, 2026-10-28
 
 Only confirmed providers and media categories are distributed. The registry, provider dossiers and

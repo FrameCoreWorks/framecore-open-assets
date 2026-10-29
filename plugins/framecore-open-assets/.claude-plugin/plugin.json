@@ -1,6 +1,6 @@
 {
   "name": "framecore-open-assets",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Search free media through official keyless APIs, inspect per-asset rights, and download verified files with provenance.",
   "author": {
     "name": "FrameCore Works"
@@ -16,5 +16,5 @@
     "video"
   ],
   "displayName": "FrameCore Open Assets",
-  "repository": "https://github.com/FrameCoreWorks/framecore-works-creative-studio"
+  "repository": "https://github.com/FrameCoreWorks/framecore-open-assets"
 }

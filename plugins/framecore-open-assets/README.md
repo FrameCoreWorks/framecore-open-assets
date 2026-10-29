@@ -1,8 +1,9 @@
 # FrameCore Open Assets
 
-A standalone media-sourcing companion for Claude, ChatGPT Work and Codex, using the same portable
-package pattern as Earshot Audio. One shared skill and Python runtime, three synchronized manifests,
-and one marketplace entry. It also hands source records to Creative Studio, FrameCut or Earshot.
+A standalone media-sourcing companion for Claude, ChatGPT Work and Codex. One shared skill and
+Python runtime, three synchronized manifests, and one marketplace entry. It hands source records to
+any consumer that reads them, such as Creative Studio, FrameCut or Earshot through FrameCore Works
+Toolbox (which imports eligible audio); none of them is required.
 
 Search official free APIs without signup or keys, inspect each asset's rights, and save a decoded
 file with source, creator, licence, attribution, hash and verification evidence. Public provider
@@ -17,9 +18,8 @@ Only confirmed provider/category paths are included. See [provider details](skil
 
 ## Installation and capabilities
 
-Use the complete host procedure: [Claude](https://github.com/FrameCoreWorks/framecore-works-creative-studio/blob/main/CLAUDE_INSTALL.md#framecore-open-assets),
-[ChatGPT](https://github.com/FrameCoreWorks/framecore-works-creative-studio/blob/main/CHATGPT_INSTALL.md#framecore-open-assets), or
-[Codex](https://github.com/FrameCoreWorks/framecore-works-creative-studio/blob/main/CODEX_INSTALL.md#framecore-open-assets). The plugin itself uses Python's standard
+Use the complete host procedure in the [installation guide](https://github.com/FrameCoreWorks/framecore-open-assets/blob/main/INSTALL.md)
+(Claude, ChatGPT Work and Codex). The plugin itself uses Python's standard
 library. Image verification also needs Pillow; audio/video verification needs FFmpeg and FFprobe.
 Ask before installing missing dependencies. No model downloads are needed.
 
@@ -30,11 +30,15 @@ No Work test proves Claude Code, Claude apps or Codex behavior.
 
 ## Developer checks
 
-Run `python3 tests/runtime_test.py` and `python3 tests/package_test.py` from this plugin directory.
-The repository's full check also runs both. Tests cover observed API response shapes, rights gates,
+Run `python3 tests/runtime_test.py`, `python3 tests/providers_test.py`, `python3 tests/package_test.py`
+and `python3 tests/contract_test.py` from this plugin directory. The repository's full check runs all four. Tests cover observed API response shapes, rights gates,
 provenance tampering, HTTP blocks/cache/budgets, actual image decoding and package discovery.
-No test installs upstream software or makes a provider request. Live CLI tests are recorded
-separately in the repository verification directory.
+No test installs upstream software or makes a provider request. Live CLI tests need separate
+authorization and are not part of these checks.
+
+Callers that coordinate several plugins can read [capabilities.json](capabilities.json) and ask for a
+`framecore-task-result/1` envelope with `--envelope-out`; the shared schema is in
+[contracts/framecore-task.schema.json](contracts/framecore-task.schema.json).
 
 Operational examples and complete input/output/error contracts are in the
 [Open Assets skill](skills/open-assets/SKILL.md) and [runtime contract](skills/open-assets/references/contract.md).
