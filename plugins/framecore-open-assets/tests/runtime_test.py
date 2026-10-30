@@ -131,6 +131,16 @@ class Checks(unittest.TestCase):
             self.assertEqual(runtime.main(['--state',str(state),'status']),0)
         self.assertFalse(state.exists());network.assert_not_called()
 
+    def test_status_accepts_host_and_reports_only_that_host(self):
+        output=io.StringIO()
+        with contextlib.redirect_stdout(output):
+            self.assertEqual(runtime.main(['--state',str(self.root/'absent'),'status','--host','codex']),0)
+        result=json.loads(output.getvalue())
+        self.assertEqual(result['host'],'codex')
+        self.assertEqual(set(result['host_results']),{'codex'})
+        with self.assertRaises(SystemExit),contextlib.redirect_stderr(io.StringIO()):
+            runtime.main(['status','--host','browser'])
+
     def test_local_decoder_rejects_playlist(self):
         p=self.root/'fake.mp3';p.write_text('#EXTM3U\nfile:///etc/passwd\n')
         with self.assertRaises(core.Refused):core.decode(p)

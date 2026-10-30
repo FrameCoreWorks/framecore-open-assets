@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1, 2026-10-30
+
+- `status` accepts an optional `--host` and then reports readiness only for that host; without it the output is
+  unchanged. The installation guide's `status --host codex` step now works (it exited with code 2 in 0.3.0).
+- Repository tool `tools/install_codex.py` (`plan`/`install`/`verify`, no network) installs one native
+  `open-assets` entry in a Codex skill scope backed by the complete plugin bundle, like Creative Studio and Toolbox.
+- The plugin README carries the one-step Claude Code install line.
+
 ## 0.3.0, 2026-10-29
 
 - Optional `framecore-task-result/1` envelope (`--envelope-out`, `--task-id`, `--requester`, `--owner`) defined by

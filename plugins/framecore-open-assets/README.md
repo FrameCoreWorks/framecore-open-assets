@@ -23,6 +23,12 @@ Use the complete host procedure in the [installation guide](https://github.com/F
 library. Image verification also needs Pillow; audio/video verification needs FFmpeg and FFprobe.
 Ask before installing missing dependencies. No model downloads are needed.
 
+In Claude Code 2.1.275 or later, one line adds the marketplace and installs the plugin:
+
+```text
+/plugin install framecore-open-assets --marketplace FrameCoreWorks/framecore-open-assets
+```
+
 The skill is readable in compatible clients; execution requires a shell/code tool and permitted
 network. An ordinary chat without those capabilities can plan but cannot claim searches/downloads.
 Provider verification is local to the actual host/category/runtime and expires after one day.

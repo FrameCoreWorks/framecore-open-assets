@@ -18,7 +18,7 @@ Run the bundled `status` command before sourcing media. Install missing dependen
 3. Give Plugin Creator the generated ZIP from code execution, not a ZIP of the whole repository. Verify the returned release, component diagnostics and stored file contents.
 4. Resolve the installed `open-assets` skill in the actual host, then run its runtime `status`.
 
-The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.3.0 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
+The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.3.1 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
 
 Ordinary ChatGPT without code execution or permitted network access can plan the work but cannot execute the CLI. Work execution evidence does not establish readiness in another host.
 
@@ -64,9 +64,21 @@ Where code execution can read the whole repository (a host with network), the re
 
 ## Codex
 
-Use the host's native plugin installation/discovery flow with the complete `plugins/framecore-open-assets` directory or its generated archive, depending on what that host accepts. Keep `plugin.json`, `.codex-plugin/plugin.json`, the skill, scripts, provider registry and references together. Do not install only `SKILL.md` into personal skills: its relative runtime would be missing.
+Use the host's native plugin installation/discovery flow with the complete `plugins/framecore-open-assets` directory or its generated archive, when that host offers one. Keep `plugin.json`, `.codex-plugin/plugin.json`, the skill, scripts, provider registry and references together. Do not install only `SKILL.md` into personal skills: its relative runtime would be missing.
 
-After installation, resolve the actual plugin directory and run `python3 <plugin-directory>/scripts/runtime.py status`. Use `--host codex` only when running in Codex. Availability of a native plugin installer depends on the host; direct CLI use remains possible in a local checkout with the requirements above.
+### Native entry with the complete bundle
+
+Without a native plugin installer, use the same direct-source pattern as Creative Studio and Toolbox. Python 3.10+ is sufficient. On the user's installation request, resolve the actual Codex skill scope (`.agents/skills` for the selected project or `~/.agents/skills` for the user) and a persistent bundle location outside every skill-discovery root. Inspect active scopes for an existing `open-assets` skill or plugin first and preserve existing or edited content. From a checkout at a verified full commit, the assistant substitutes absolute paths:
+
+```sh
+python3 tools/install_codex.py plan --skills-dir "<skills-dir>" --bundle-dir "<bundle-dir>" --source-commit "<40-character-commit>"
+python3 tools/install_codex.py install --skills-dir "<skills-dir>" --bundle-dir "<bundle-dir>" --source-commit "<40-character-commit>"
+python3 tools/install_codex.py verify --skills-dir "<skills-dir>" --bundle-dir "<bundle-dir>" --source-commit "<40-character-commit>"
+```
+
+The helper makes no network requests. It copies the complete plugin into the bundle, creates one native `open-assets` entry pointing to the bundled skill, and records file hashes and the source commit in `installation.json`. `plan` writes nothing; identical repeats are read-only; conflicting, edited or partial installations are rejected and left untouched. A receipt proves file installation, not host activation: refresh the Codex skills view or start a new session. To update, choose a new versioned bundle path and replace only the verified previous entry under the user's update request.
+
+After installation, run `python3 <bundle-dir>/scripts/runtime.py status --host codex` (only when actually running in Codex; plain `status` reports every host). Direct CLI use also works in a local checkout with the requirements above.
 
 ## Claude Code
 

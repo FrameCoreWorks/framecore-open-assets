@@ -203,7 +203,8 @@ def main(argv=None):
     parser.add_argument('--state', default=os.environ.get('FRAMECORE_OPEN_ASSETS_STATE',
                         str(Path.home() / '.framecore-open-assets')))
     sub = parser.add_subparsers(dest='command', required=True)
-    sub.add_parser('status', help='Read local capabilities and provider policy; no network')
+    status = sub.add_parser('status', help='Read local capabilities and provider policy; no network')
+    status.add_argument('--host', choices=HOSTS, help='Report readiness only for this actual executing host')
     for name in ('search', 'verify', 'download'):
         p = sub.add_parser(name)
         p.add_argument('--host', choices=HOSTS, required=True, help='Actual executing host; never substitute another host label')
@@ -253,7 +254,9 @@ def main(argv=None):
                       'network': 'NOT_RUN', 'providers': REGISTRY,
                       'host_results': {h: {p: {c: 'PASS' if proof_valid(args.state, h, p, c) else 'NOT_RUN'
                                                 for c in row['categories']} for p, row in REGISTRY.items()}
-                                       for h in HOSTS}}
+                                       for h in ((args.host,) if args.host else HOSTS)}}
+            if args.host:
+                output['host'] = args.host
         elif args.command == 'search':
             if not 1 <= args.limit <= 5 or not 1 <= len(args.query.strip()) <= 240:
                 raise Refused('input_limit', 'Use 1-5 results and a query of 1-240 characters')
