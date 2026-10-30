@@ -25,29 +25,42 @@ Ordinary ChatGPT without code execution or permitted network access can plan the
 ## Update without a ZIP (owner decision 2026-10-29)
 
 Installation and updates run on their own: never download a release ZIP, never ask the owner to attach or upload a
-file. ChatGPT Work has no network in code execution and its update tool takes no URL. It reads repository files as
-text through the GitHub connector, but that text cannot be moved into code execution (Work attempt 2026-10-30: 31
-of 31 files read, 0 transferred). So the files go from the connector straight to Plugin Creator, and code execution
-only checks what was saved:
+file. What ChatGPT Work's tools allow (attempts of 2026-10-30): Plugin Creator's `create_plugin` and `update_plugin`
+take only `archive`, an absolute path to a ZIP in code execution (a data URL is refused with `INVALID_ARGUMENT`);
+code execution has no network (github.com does not resolve); the GitHub connector returns file text to the model
+but writes no file into code execution. So the model itself writes each file's text into code execution, checks
+it against the git blob hashes and zips it there:
 
 1. Resolve `main` to one full commit. List `plugins/framecore-open-assets/` recursively at that commit through the connector; each
-   entry carries its git blob `sha` and `size` (NEW). For an update, list the commit that released the saved version
-   too (the commit named "Open Assets <version>" in the history; OLD).
-2. Decide the files to write: for a first installation every file; for an update every path whose NEW hash differs
-   from OLD or that is new, plus the delete paths (in OLD, not in NEW, present in the saved plugin). A saved file
-   that differs from both OLD and NEW is a private edit: merge it, never overwrite it silently.
-3. Read each of those files through the connector at the pinned commit and give its exact text to Plugin Creator as
-   that path's file content; create the plugin (first installation, after checking no FrameCore Works Toolbox or
-   Open Assets identity exists) or update the existing one with the delete paths under the current release guard.
-4. Check the saved plugin in code execution: save `tools/hosted_update.py` there (its text typed in, or read from the saved
-   plugin where present), write EXPECT as {path: git blob sha} for the written files from NEW, then run
-   `python3 hosted_update.py verify --expect EXPECT.json --saved SAVED_DIR --absent <delete paths>`. A mismatch
-   names the path: write that file again from the connector, unchanged. Report save and verification separately.
-   Without the script, this prints each saved file's git blob hash to compare with NEW:
-   `python3 -c "import hashlib,pathlib,sys;[print(p,hashlib.sha1(b'blob %d\0'%len(d)+d).hexdigest()) for p in sys.argv[1:] for d in [pathlib.Path(p).read_bytes()]]" <paths>`.
+   entry carries its git blob `sha` and `size` (NEW). Search Plugin Creator's saved plugins for FrameCore Open
+   Assets: none means a first installation; otherwise this is an update of that identity (list the commit that released the saved
+   version, the commit named "Open Assets <version>" in the history, as OLD).
+2. Choose the files: a first installation takes every file; an update takes every path whose NEW hash differs from
+   OLD or that is new, deletes the paths in OLD but not in NEW, and merges any private edit by hand.
+   The plugin's `tests/` folder (19 files, 100 KB) is not needed at run time and may be left out (46 files and
+   137 KB remain).
+3. Read each chosen file through the connector and write its exact text in code execution under
+   `/mnt/data/open-assets/<path>` (`pathlib.Path(...).write_text(text, encoding='utf-8')`; for a long file several
+   cells that append in order). Keep every character, including the final newline. Write
+   `/mnt/data/expect.json` as {path: git blob sha} for the chosen files, copied from NEW.
+4. Check and zip in one cell; it writes the ZIP only when every file matches:
 
-Where code execution can read the whole repository (a host with network), `hosted_update.py plan` and `pack` build
-the same update as a verified delta ZIP instead.
+   ```python
+   import hashlib,json,pathlib,zipfile
+   R=pathlib.Path('/mnt/data/open-assets');E=json.load(open('/mnt/data/expect.json'))
+   bad=[p for p,h in E.items() if not (R/p).is_file() or hashlib.sha1(b'blob %d\0'%len(d:=(R/p).read_bytes())+d).hexdigest()!=h]
+   print('BAD',bad) if bad else print('OK',len(E))
+   if not bad:
+       with zipfile.ZipFile('/mnt/data/open-assets.zip','w',zipfile.ZIP_DEFLATED) as z:[z.write(R/p,p) for p in sorted(E)]
+   ```
+
+   For each path in `BAD`, read the file again from the connector and rewrite it unchanged; never patch it by guess.
+5. First installation: `create_plugin(archive="/mnt/data/open-assets.zip")`. Update: `update_plugin` with the same
+   archive, the delete paths and the current release guard; an update overlays the saved release, so a ZIP of only
+   the changed files is enough. Read back the saved manifests and skill, and report save and checks separately.
+
+Where code execution can read the whole repository (a host with network), the repository's own package script, or
+`hosted_update.py plan` and `pack`, build the same archive directly.
 
 ## Codex
 
