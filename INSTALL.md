@@ -24,28 +24,30 @@ Ordinary ChatGPT without code execution or permitted network access can plan the
 
 ## Update without a ZIP (owner decision 2026-10-29)
 
-The update runs on its own: never download a release ZIP, never ask the owner to attach or upload a file. ChatGPT
-Work has no network in code execution and its update tool does not take a URL, but it reads repository files as
-text through the GitHub connector, so the update is built there:
+Installation and updates run on their own: never download a release ZIP, never ask the owner to attach or upload a
+file. ChatGPT Work has no network in code execution and its update tool takes no URL. It reads repository files as
+text through the GitHub connector, but that text cannot be moved into code execution (Work attempt 2026-10-30: 31
+of 31 files read, 0 transferred). So the files go from the connector straight to Plugin Creator, and code execution
+only checks what was saved:
 
-1. Resolve `main` to one full commit. List `plugins/framecore-open-assets/` recursively at that commit through the connector;
-   each entry carries its git blob `sha` and `size`. Save the listing as `{"tree": [{"path", "type": "blob",
-   "sha", "size"}]}` (NEW). Do the same at the commit that released the saved version (the commit named "Open Assets <version>" in the history) for OLD; without
-   it the baseline is unknown and nothing is deleted.
-2. Read `tools/hosted_update.py` at the pinned commit through the connector and save it in code execution (standard library
-   only, no network).
-3. With the saved plugin's files in code execution:
-   `python3 hosted_update.py plan --new NEW.json --old OLD.json --prefix plugins/framecore-open-assets --saved SAVED_DIR --out plan.json`.
-4. Read every `fetch` path from `plugins/framecore-open-assets/<path>` through the connector and save it unchanged under the same
-   relative path (a binary file as `<path>.b64` with base64 content).
-5. `python3 hosted_update.py pack --new NEW.json --prefix plugins/framecore-open-assets --plan plan.json --files FETCHED_DIR --out delta.zip`
-   checks every file against its git blob hash and writes `delta.zip` plus `delta.zip.json`. A mismatch stops it
-   with the path; read that file again unchanged.
-6. Pass `delta.zip` from code execution to the update tool with the plan's `delete_paths` under the current
-   release guard (if it cannot take a code-execution file, pass the same verified files as file contents). Merge
-   `review` paths by hand. Read back the affected files and confirm the deleted paths are absent.
+1. Resolve `main` to one full commit. List `plugins/framecore-open-assets/` recursively at that commit through the connector; each
+   entry carries its git blob `sha` and `size` (NEW). For an update, list the commit that released the saved version
+   too (the commit named "Open Assets <version>" in the history; OLD).
+2. Decide the files to write: for a first installation every file; for an update every path whose NEW hash differs
+   from OLD or that is new, plus the delete paths (in OLD, not in NEW, present in the saved plugin). A saved file
+   that differs from both OLD and NEW is a private edit: merge it, never overwrite it silently.
+3. Read each of those files through the connector at the pinned commit and give its exact text to Plugin Creator as
+   that path's file content; create the plugin (first installation, after checking no FrameCore Works Toolbox or
+   Open Assets identity exists) or update the existing one with the delete paths under the current release guard.
+4. Check the saved plugin in code execution: save `tools/hosted_update.py` there (its text typed in, or read from the saved
+   plugin where present), write EXPECT as {path: git blob sha} for the written files from NEW, then run
+   `python3 hosted_update.py verify --expect EXPECT.json --saved SAVED_DIR --absent <delete paths>`. A mismatch
+   names the path: write that file again from the connector, unchanged. Report save and verification separately.
+   Without the script, this prints each saved file's git blob hash to compare with NEW:
+   `python3 -c "import hashlib,pathlib,sys;[print(p,hashlib.sha1(b'blob %d\0'%len(d)+d).hexdigest()) for p in sys.argv[1:] for d in [pathlib.Path(p).read_bytes()]]" <paths>`.
 
-A first installation follows the same steps without `--old` and `--saved`: the plan then reads every file.
+Where code execution can read the whole repository (a host with network), `hosted_update.py plan` and `pack` build
+the same update as a verified delta ZIP instead.
 
 ## Codex
 
