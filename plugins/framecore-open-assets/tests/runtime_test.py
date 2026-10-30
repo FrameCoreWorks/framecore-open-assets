@@ -174,7 +174,7 @@ class Checks(unittest.TestCase):
     def test_all_ten_adapters_parse_observed_provider_shapes(self):
         fixtures={'met':['met-search-v1-1','met-metadata'],'commons':['commons-search'],
                   'cleveland':['cleveland-search'],'wellcome':['wellcome-search'],'ambientcg':['ambientcg-search'],
-                  'polyhaven':['polyhaven-search','polyhaven-files'],'phylopic':['phylopic-search','phylopic-page','phylopic-image'],
+                  'polyhaven':['polyhaven-search','polyhaven-files','polyhaven-info'],'phylopic':['phylopic-search','phylopic-page','phylopic-image'],
                   'sfxmint':['sfxmint-search'],'librivox':['librivox-search'],'nasa':['nasa-search','nasa-manifest']}
         for provider,names in fixtures.items():
             with self.subTest(provider=provider):
@@ -187,6 +187,32 @@ class Checks(unittest.TestCase):
                 self.assertTrue(result[0]['variants'])
                 expected={'commons':'review_sa','nasa':'review_nasa','librivox':'review_jurisdiction'}.get(provider,'eligible')
                 self.assertEqual(result[0]['rights_status'],expected)
+
+    def test_polyhaven_credits_the_asset_author(self):
+        # 2026-10-31 Codex retest: the record named "Poly Haven" as creator, not the asset's author.
+        client=self.client('polyhaven')
+        with patch.object(client,'json',side_effect=[self.fixture(n) for n in ['polyhaven-search','polyhaven-files','polyhaven-info']]):
+            item=runtime.search_one(client,'sand','graphics',1)[0]
+        self.assertEqual(item['creator'],'Example Author')
+        self.assertEqual(item['title'],'Sand 03')
+        self.assertIn('Assets provided by Poly Haven',' '.join(item['warnings']))
+
+    def test_commons_sound_effects_search_is_filtered_to_sound_effects(self):
+        # 2026-10-31 Codex retest: "whoosh" as sfx returned pronunciations and music labelled sfx.
+        client=self.client('commons')
+        with patch.object(client,'json',side_effect=[self.fixture('commons-search')]) as call:
+            item=runtime.search_one(client,'whoosh','sfx',1)[0]
+        self.assertIn('deepcat', call.call_args_list[0].args[0])
+        self.assertFalse(any('not filed' in w for w in item['warnings']))
+
+    def test_commons_sound_effects_fall_back_with_a_warning(self):
+        client=self.client('commons')
+        with patch.object(client,'json',side_effect=[{},self.fixture('commons-search')]) as call:
+            item=runtime.search_one(client,'whoosh','sfx',1)[0]
+        self.assertEqual(call.call_count,2)
+        self.assertNotIn('deepcat', call.call_args_list[1].args[0])
+        self.assertTrue(any('not filed' in w for w in item['warnings']))
+        self.assertNotEqual(item['rights_status'],'blocked')
 
     def test_met_metadata_is_not_blanket_image_clearance(self):
         client=self.client('met');obj=self.fixture('met-metadata');obj['isPublicDomain']=False

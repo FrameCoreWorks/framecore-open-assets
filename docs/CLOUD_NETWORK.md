@@ -19,7 +19,7 @@ instead of a generic `transport_error`.
 ## Allow the provider hosts
 
 `runtime.py domains` prints the allowlist, one host per line, generated from `providers.json` (a leading
-`*.` covers every subdomain). For version 0.4.0 it is:
+`*.` covers every subdomain). For versions 0.4.0 and 0.4.1 it is:
 
 ```text
 commons.wikimedia.org

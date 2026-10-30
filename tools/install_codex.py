@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import shlex
 import shutil
 
 from package import PLUGIN
@@ -42,7 +43,7 @@ def entry_text(bundle, description):
             '# ' + NAME + '\n\n'
             f'Read `{bundle / "skills" / NAME / "SKILL.md"}` and follow its instructions.\n'
             'Resolve all references and scripts from that bundled skill location.\n'
-            f'Check readiness with `python3 {runtime} status --host codex`. Use the actual\n'
+            f'Check readiness with `python3 {shlex.quote(str(runtime))} status --host codex`. Use the actual\n'
             'host and model, and the user\'s language. Installed files do not establish\n'
             'provider readiness.\n')
 

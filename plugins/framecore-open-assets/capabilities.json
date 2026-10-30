@@ -1,6 +1,6 @@
 {
   "schema": "framecore-capabilities/1",
-  "plugin": {"name": "framecore-open-assets", "version": "0.4.0"},
+  "plugin": {"name": "framecore-open-assets", "version": "0.4.1"},
   "entry_skill": "skills/open-assets/SKILL.md",
   "contract_versions": ["1"],
   "contract_schema": {"path": "contracts/framecore-task.schema.json", "sha256": "e7cc0f4e612395768e8c8c6cf2a033a555bc69b4c8ea5ca45c4db019a342897a"},

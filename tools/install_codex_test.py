@@ -1,5 +1,7 @@
 """Offline tests for the Codex native-entry installer."""
 import json
+import re
+import shlex
 from pathlib import Path
 import shutil
 import sys
@@ -42,6 +44,14 @@ class InstallCodex(unittest.TestCase):
         self.assertEqual(self.run_install('install')['status'], 'already_up_to_date')
         self.assertEqual(entry.stat().st_mtime_ns, before)
         self.assertEqual(self.run_install('verify')['host_activation'], 'NOT_RUN')
+
+    def test_status_command_survives_spaces_and_ampersands(self):
+        # 2026-10-31 Codex retest: an unquoted runtime path under "Codex&Claude" broke with exit 127.
+        bundle = self.base / 'Codex&Claude dir/bundle'
+        text = install_codex.entry_text(bundle, 'x')
+        command = re.search(r'`(python3 [^`]+ status --host codex)`', text).group(1)
+        self.assertEqual(shlex.split(command), ['python3', str(bundle / 'scripts' / 'runtime.py'),
+                                                'status', '--host', 'codex'])
 
     def test_runtime_cache_does_not_break_verify(self):
         self.run_install('install')

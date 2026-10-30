@@ -1,6 +1,18 @@
 # Changelog
 
-## 0.4.0, 2026-10-30
+## 0.4.1, 2026-10-31
+
+Trigger: the 2026-10-31 Codex desktop retest of 0.3.1 (report U6, U12, U13).
+
+- The native Codex entry quotes the runtime path in its `status --host codex` command, so a bundle under a
+  folder such as `Codex&Claude` or with spaces no longer breaks in the shell (exit 127). `INSTALL.md` quotes
+  the same command.
+- Poly Haven records read `/info/{id}` and name the asset's authors as creator and its display name as title;
+  the "Assets provided by Poly Haven" service credit stays.
+- Commons sound-effect searches look in `deepcat:"Sound effects"` first. When that finds nothing, the plain
+  audio search runs and each result carries a warning that it may be speech or music.
+
+
 
 Trigger: in a Claude Code cloud thread Open Assets failed because the default network policy blocks the
 provider hosts, and the runtime reported only a generic `transport_error`.

@@ -18,7 +18,7 @@ Run the bundled `status` command before sourcing media. Install missing dependen
 3. Give Plugin Creator the generated ZIP from code execution, not a ZIP of the whole repository. Verify the returned release, component diagnostics and stored file contents.
 4. Resolve the installed `open-assets` skill in the actual host, then run its runtime `status`.
 
-The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.4.0 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
+The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.4.1 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
 
 Ordinary ChatGPT without code execution or permitted network access can plan the work but cannot execute the CLI. Work execution evidence does not establish readiness in another host.
 
@@ -78,7 +78,7 @@ python3 tools/install_codex.py verify --skills-dir "<skills-dir>" --bundle-dir "
 
 The helper makes no network requests. It copies the complete plugin into the bundle, creates one native `open-assets` entry pointing to the bundled skill, and records file hashes and the source commit in `installation.json`. `plan` writes nothing; identical repeats are read-only; conflicting, edited or partial installations are rejected and left untouched. A receipt proves file installation, not host activation: refresh the Codex skills view or start a new session. To update, choose a new versioned bundle path and replace only the verified previous entry under the user's update request.
 
-After installation, run `python3 <bundle-dir>/scripts/runtime.py status --host codex` (only when actually running in Codex; plain `status` reports every host). Direct CLI use also works in a local checkout with the requirements above.
+After installation, run `python3 "<bundle-dir>/scripts/runtime.py" status --host codex` (only when actually running in Codex; plain `status` reports every host). Direct CLI use also works in a local checkout with the requirements above.
 
 ## Claude Code
 

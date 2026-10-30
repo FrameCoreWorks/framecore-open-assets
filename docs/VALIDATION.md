@@ -1,5 +1,12 @@
 # Validation
 
+## 0.4.1 source (2026-10-31)
+
+Execution environment: Claude Code cloud container, Linux, provider hosts blocked. New offline tests (quoted
+Codex status command with `&` and a space, Poly Haven author credit from a fixture shaped by the published
+OpenAPI schema, Commons sound-effect filter and fallback) failed on 0.4.0 and pass on 0.4.1. Live Poly Haven
+`/info` and Commons `deepcat` responses, Codex, Claude apps and the hosted ChatGPT Work update: NOT_RUN.
+
 ## 0.4.0 source (2026-10-30)
 
 Execution environment: Claude Code cloud container, Linux, default network policy. Before (0.3.1 code path): a proxy refusal of a Commons search surfaced as

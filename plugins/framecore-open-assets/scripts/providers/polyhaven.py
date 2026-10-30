@@ -18,7 +18,10 @@ def search(client, query, category, limit):
                 for fmt, f in formats.items():
                     if fmt in ('jpg', 'png') and isinstance(f, dict) and f.get('url'):
                         variants.append(variant(f['url'], channel + ' ' + size + ' ' + fmt, bytes=f.get('size', 0)))
-        out.append(asset('polyhaven', id, id, 'Poly Haven', 'https://polyhaven.com/a/' + quote(id, safe=''),
+        info = client.json('https://api.polyhaven.com/info/' + quote(id, safe=''),
+                           'Read the asset name and authors for the credit record')
+        creator = ', '.join(info.get('authors') or {}) or 'Poly Haven'
+        out.append(asset('polyhaven', id, info.get('name') or id, creator, 'https://polyhaven.com/a/' + quote(id, safe=''),
                          sorted(variants, key=lambda v: v.get('bytes', 0)), CC0, category,
                          ['Assets provided by Poly Haven (https://polyhaven.com). Display this service credit with results.']))
     return out

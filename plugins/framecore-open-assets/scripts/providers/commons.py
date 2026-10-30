@@ -1,13 +1,29 @@
 from core import asset, variant, endpoint, PDM
 
 
+SFX_FILTER = ' deepcat:"Sound effects"'
+UNFILED = ('This audio is not filed under Commons Sound effects; it may be speech or music. '
+           'Listen before using it as a sound effect.')
+
+
+def query_commons(client, search, limit):
+    return client.json(endpoint('https://commons.wikimedia.org/w/api.php', action='query', format='json',
+                                generator='search', gsrsearch=search,
+                                gsrnamespace=6, gsrlimit=limit, prop='imageinfo',
+                                iiprop='url|extmetadata|mime', iiurlwidth=800, maxlag=5),
+                       'Search Commons file records with creator and file-specific licence metadata')
+
+
 def search(client, query, category, limit):
     kind = 'audio' if category in ('audio', 'music', 'sfx') else 'video' if category == 'video' else 'bitmap'
-    data = client.json(endpoint('https://commons.wikimedia.org/w/api.php', action='query', format='json',
-                               generator='search', gsrsearch=query + ' filetype:' + kind,
-                               gsrnamespace=6, gsrlimit=limit, prop='imageinfo',
-                               iiprop='url|extmetadata|mime', iiurlwidth=800, maxlag=5),
-                       'Search Commons file records with creator and file-specific licence metadata')
+    notes = []
+    if category == 'sfx':
+        data = query_commons(client, query + ' filetype:audio' + SFX_FILTER, limit)
+        if not data.get('query', {}).get('pages'):
+            data = query_commons(client, query + ' filetype:audio', limit)
+            notes = [UNFILED]
+    else:
+        data = query_commons(client, query + ' filetype:' + kind, limit)
     out = []
     for page in data.get('query', {}).get('pages', {}).values():
         for info in page.get('imageinfo', [])[:1]:
@@ -23,6 +39,6 @@ def search(client, query, category, limit):
                 links.append(variant(info['url'], 'original'))
             warnings = [field('Restrictions')] if field('Restrictions') else []
             out.append(asset('commons', page['pageid'], page['title'], field('Artist'),
-                             info.get('descriptionurl'), links, licence, category, warnings,
+                             info.get('descriptionurl'), links, licence, category, warnings + notes,
                              review='blocked' if warnings else None))
     return out
