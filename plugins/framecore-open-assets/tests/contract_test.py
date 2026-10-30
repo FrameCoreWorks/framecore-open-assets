@@ -224,7 +224,7 @@ class Contract(unittest.TestCase):
         self.assertTrue((PLUGIN / caps['entry_skill']).is_file())
         cap = caps['capabilities'][0]
         parser_source = (PLUGIN / 'scripts/runtime.py').read_text()
-        self.assertEqual(cap['operations'], ['status', 'search', 'verify', 'download'])
+        self.assertEqual(cap['operations'], ['status', 'domains', 'reach', 'search', 'verify', 'download'])
         for flag in cap['envelope_flags']:
             self.assertIn(f"'{flag}'", parser_source)
         categories = sorted({c for row in core.REGISTRY.values() for c in row['categories']})

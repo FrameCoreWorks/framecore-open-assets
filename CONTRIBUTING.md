@@ -15,7 +15,7 @@ python3 tools/check.py
 python3 tools/package.py
 ```
 
-The check runs all four test suites (runtime, providers, package, contract) and validates manifests, skill YAML, local Markdown links, the standalone marketplace, baseline hashes and archive contents. Tests use temporary directories and fixtures, not live provider APIs. CI runs the same command on Ubuntu/Python 3.12. Other Python versions, Windows, installed clients and live provider availability require separate evidence.
+The check runs all five test suites (runtime, providers, package, contract, network) and validates manifests, skill YAML, local Markdown links, the standalone marketplace, baseline hashes and archive contents. Tests use temporary directories and fixtures, not live provider APIs. CI runs the same command on Ubuntu/Python 3.12. Other Python versions, Windows, installed clients and live provider availability require separate evidence.
 
 The imported package test expects a marketplace two directories above the plugin. This repository supplies that catalogue itself; it does not depend on the original monorepo. Run the complete check from this checkout. A package-only archive is installable without the development marketplace.
 

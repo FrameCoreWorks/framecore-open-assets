@@ -2,7 +2,7 @@
 
 Standalone asset-sourcing plugin for **ChatGPT Work, Codex and Claude**, maintained by FrameCore Works. Find media through documented public APIs, check each asset's rights, and download verified files with source and attribution records.
 
-**Current plugin version: 0.3.1** (source; the hosted ChatGPT Work release is still 0.2.1 until it is updated, see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
+**Current plugin version: 0.4.0** (source; the hosted ChatGPT Work release is still 0.2.1 until it is updated, see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
 
 ## Start here
 
@@ -19,7 +19,7 @@ From the repository root, inspect local capabilities without a network request:
 python3 plugins/framecore-open-assets/scripts/runtime.py status
 ```
 
-Python 3.10+ runs the CLI. Pillow verifies images and texture packages; FFmpeg and FFprobe verify audio/video. Search and download also require permitted network access. Installation alone does not establish provider readiness.
+Python 3.10+ runs the CLI. Pillow verifies images and texture packages; FFmpeg and FFprobe verify audio/video. Search and download also require permitted network access; `runtime.py reach` shows which providers this environment can connect to, and [cloud containers](docs/CLOUD_NETWORK.md) lists the hosts to allow. Installation alone does not establish provider readiness.
 
 ## Providers and boundaries
 

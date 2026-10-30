@@ -8,13 +8,19 @@ import json
 import os
 from pathlib import Path
 import shutil
+import socket
 import sys
 import tempfile
+import urllib.parse
+import urllib.request
 
 from core import ROOT, REGISTRY, VERSION, Refused, Client, download, utc
 import contract
 
 HOSTS = ('chatgpt_work', 'claude_code', 'claude_apps', 'codex')
+WORKAROUNDS = ('Do not retry. Tell the user in one or two sentences that this environment blocks the provider, then offer: '
+               'allow the hosts printed by `runtime.py domains` in the host\'s network settings; run the task on a '
+               'computer with open internet; or continue with the user\'s own files or assets made in code.')
 
 
 def fingerprint():
@@ -67,6 +73,69 @@ def save_new(path, obj):
             json.dump(obj, f, indent=2); f.write('\n')
     except FileExistsError:
         raise Refused('output_exists', 'Output already exists: ' + str(path))
+
+
+def allowlist(providers=None):
+    """Every reviewed provider host once, in registry order; a leading-dot suffix becomes `*.`."""
+    out = []
+    for name, row in REGISTRY.items():
+        if providers and name not in providers:
+            continue
+        for domain in row['allowed_domains']:
+            domain = '*' + domain if domain.startswith('.') else domain
+            if domain not in out:
+                out.append(domain)
+    return out
+
+
+def proxy_for(host):
+    proxy = urllib.request.getproxies().get('https')
+    return None if not proxy or urllib.request.proxy_bypass(host) else proxy
+
+
+def probe(host, proxy, timeout=6):
+    """Open a connection to host:443 (through the host's proxy when set) and close it; no HTTP request."""
+    try:
+        if proxy:
+            p = urllib.parse.urlsplit(proxy)
+            with socket.create_connection((p.hostname, p.port or 80), timeout=timeout) as conn:
+                conn.sendall(f'CONNECT {host}:443 HTTP/1.1\r\nHost: {host}:443\r\n\r\n'.encode())
+                line = conn.recv(256).split(b'\r\n', 1)[0].decode('latin-1').split()
+            code = line[1] if len(line) > 1 else ''
+            return 'reachable' if code == '200' else 'blocked' if code in ('403', '407') else 'unknown'
+        with socket.create_connection((host, 443), timeout=timeout):
+            return 'reachable'
+    except socket.gaierror:
+        return 'no_dns'
+    except OSError:
+        return 'unreachable'
+
+
+def reach(providers):
+    rows, seen = {}, {}
+    for name in providers:
+        domains = {}
+        for domain in REGISTRY[name]['allowed_domains']:
+            if domain.startswith('.'):
+                domains['*' + domain] = 'not_probed'
+                continue
+            if domain not in seen:
+                print(json.dumps({'next_probe': domain, 'hypothesis': 'Can this environment open a connection to '
+                                  + domain + '? Connection only; no HTTP request'}), file=sys.stderr, flush=True)
+                seen[domain] = probe(domain, proxy_for(domain))
+            domains[domain] = seen[domain]
+        states = {v for v in domains.values() if v != 'not_probed'}
+        state = ('reachable' if states == {'reachable'} else 'blocked' if 'blocked' in states
+                 else 'unreachable' if states & {'unreachable', 'no_dns'} else 'unknown')
+        rows[name] = {'state': state, 'domains': domains}
+    ready = [n for n, r in rows.items() if r['state'] == 'reachable']
+    output = {'version': VERSION, 'network': 'open' if len(ready) == len(rows) else 'blocked' if not ready
+              else 'partly_blocked', 'probe': 'connection to port 443 only; providers receive no HTTP request',
+              'providers': rows, 'ready_providers': ready,
+              'blocked_domains': [d for d, s in seen.items() if s != 'reachable'], 'allowlist': allowlist()}
+    if output['network'] != 'open':
+        output['advice'] = WORKAROUNDS
+    return output
 
 
 def search_one(client, query, category, limit):
@@ -230,8 +299,20 @@ def main(argv=None):
         p.add_argument('--task-id', help='Caller task id to echo; omit for a standalone job')
         p.add_argument('--requester', help='Calling plugin as name@version, e.g. framecore-work-creative-studio@1.151.0')
         p.add_argument('--owner', help='Who accepts the result (for example studio or user)')
+    domains = sub.add_parser('domains', help='Print every reviewed provider host, one per line, for a network allowlist; no network')
+    domains.add_argument('--provider', choices=list(REGISTRY), action='append')
+    probe_cmd = sub.add_parser('reach', help='Check which providers this environment can connect to; no HTTP request')
+    probe_cmd.add_argument('--provider', choices=list(REGISTRY), action='append')
+    for p in (domains, probe_cmd):
+        p.set_defaults(envelope_out=None, task_id=None, requester=None, owner=None)
     argv = list(sys.argv[1:] if argv is None else argv)
     args = parser.parse_args(argv)
+    if args.command == 'domains':
+        print('\n'.join(allowlist(args.provider)))
+        return 0
+    if args.command == 'reach':
+        print(json.dumps(reach(args.provider or list(REGISTRY)), indent=2))
+        return 0
     clients = []
     output = error = None
     envelope_ok = False
@@ -309,7 +390,8 @@ def main(argv=None):
         # archives must produce a failed result, never a traceback that looks like success.
         error = {'status': 'FAIL', 'error': getattr(exc, 'kind', 'invalid_input_or_response'),
                  'message': str(exc), 'trace': [e for c in clients for e in c.trace],
-                 'next_action': 'Report this failure and ask before switching provider or route.'}
+                 'next_action': WORKAROUNDS if getattr(exc, 'kind', '') == 'network_blocked'
+                 else 'Report this failure and ask before switching provider or route.'}
         print(json.dumps(error, indent=2))
         code = 2
     if args.envelope_out and envelope_ok:

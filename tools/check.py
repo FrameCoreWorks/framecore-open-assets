@@ -56,7 +56,7 @@ def main():
                 require((path.parent / link.split('#')[0]).exists(), f'Broken local link: {path}: {link}')
     workflow = yaml.safe_load((ROOT / '.github/workflows/ci.yml').read_text())
     require(workflow['permissions'] == {'contents': 'read'}, 'CI should not write repository contents')
-    for test in ('runtime_test.py', 'providers_test.py', 'package_test.py', 'contract_test.py'):
+    for test in ('runtime_test.py', 'providers_test.py', 'package_test.py', 'contract_test.py', 'network_test.py'):
         subprocess.run([sys.executable, str(PLUGIN / 'tests' / test)], cwd=PLUGIN, check=True)
     subprocess.run([sys.executable, str(ROOT / 'tools' / 'install_codex_test.py')], cwd=ROOT, check=True)
     with tempfile.TemporaryDirectory() as temp:

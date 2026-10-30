@@ -63,7 +63,8 @@ JSON with `status`, `error`, `message`, request `trace` and `next_action`. The c
 - Provenance and outputs: `untrusted_result`, `stale_result`, `result_size`, `output_exists`,
   `package_output`, `provider_mismatch`.
 - Network: `unsafe_url`, `unapproved_host`, `request_budget`, `redirect_limit`, `cloudflare_challenge`,
-  `access_denied`, `rate_limited`, `server_error`, `http_error`, `transport_error`, `html_response`,
+  `network_blocked` (this environment's network policy refused the tunnel; the provider was never
+  contacted), `access_denied`, `rate_limited`, `server_error`, `http_error`, `transport_error`, `html_response`,
   `invalid_json`, `api_error`, `size_limit`, `size_or_time_limit`.
 - Files and decoding: `hash_mismatch`, `size_mismatch`, `wrong_media_type`, `decoder_missing`,
   `unsupported_media`, `not_media`, `decode_failed`, `pixel_limit`, `archive_limit`, `archive_crc`,

@@ -1,6 +1,6 @@
 {
   "schema": "framecore-capabilities/1",
-  "plugin": {"name": "framecore-open-assets", "version": "0.3.1"},
+  "plugin": {"name": "framecore-open-assets", "version": "0.4.0"},
   "entry_skill": "skills/open-assets/SKILL.md",
   "contract_versions": ["1"],
   "contract_schema": {"path": "contracts/framecore-task.schema.json", "sha256": "e7cc0f4e612395768e8c8c6cf2a033a555bc69b4c8ea5ca45c4db019a342897a"},
@@ -9,13 +9,13 @@
       "id": "open-assets",
       "kind": "built-in",
       "launcher": "scripts/runtime.py",
-      "operations": ["status", "search", "verify", "download"],
+      "operations": ["status", "domains", "reach", "search", "verify", "download"],
       "readiness_command": "python3 scripts/runtime.py status",
       "consent_required": [],
       "categories": ["photos", "graphics", "audio", "music", "sfx", "video"],
       "providers": "providers.json",
       "requirements": {"python": ">=3.10", "images": "Pillow", "audio_video": "ffprobe and ffmpeg", "api_keys": "none"},
-      "network": {"status": "none", "search_download": "public HTTPS provider APIs listed in providers.json"},
+      "network": {"status": "none", "domains": "none", "reach": "connection to port 443 of each provider host, no HTTP request", "search_download": "public HTTPS provider APIs listed in providers.json"},
       "envelope_flags": ["--envelope-out", "--task-id", "--requester", "--owner"]
     }
   ]

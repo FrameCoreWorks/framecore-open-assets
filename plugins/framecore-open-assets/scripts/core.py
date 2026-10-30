@@ -17,12 +17,13 @@ import urllib.parse
 import urllib.request
 import zipfile
 
-VERSION = '0.3.1'
+VERSION = '0.4.0'
 ROOT = Path(__file__).resolve().parents[1]
 CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/'
 PDM = 'https://creativecommons.org/publicdomain/mark/1.0/'
 MAX_FILE = 32 * 1024 * 1024
 REGISTRY = json.loads((ROOT / 'providers.json').read_text())
+PROXY_DENIAL = re.compile(r'Tunnel connection failed: 40[37]')
 
 
 class Refused(Exception):
@@ -219,6 +220,13 @@ class Client:
             raise
         except (urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
             event['error'] = type(exc).__name__
+            if PROXY_DENIAL.search(str(exc)):
+                # The host's own egress policy refused the tunnel; the provider was never reached.
+                host = urllib.parse.urlsplit(url).hostname
+                event['error'] = 'network_blocked'
+                raise Refused('network_blocked', 'This environment\'s network policy blocks ' + host +
+                              '; the provider was not contacted. Allow the hosts printed by `runtime.py domains`, '
+                              'or work where the internet is open') from exc
             raise Refused('transport_error', str(exc)) from exc
         finally:
             event['ended_utc'] = utc()

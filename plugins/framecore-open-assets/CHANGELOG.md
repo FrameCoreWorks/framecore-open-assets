@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.0, 2026-10-30
+
+Trigger: in a Claude Code cloud thread Open Assets failed because the default network policy blocks the
+provider hosts, and the runtime reported only a generic `transport_error`.
+
+- New `reach` command: opens one connection to port 443 of each provider host (through the host's proxy
+  when set), sends no HTTP request, and reports reachable/blocked providers, the blocked hosts, the full
+  allowlist and workaround advice.
+- New `domains` command: prints every reviewed provider host once, one per line, ready for a network allowlist.
+- A proxy refusing the tunnel (403/407) now fails with `network_blocked` (envelope status `blocked`) and a
+  `next_action` that says not to retry and offers the three workarounds.
+- The skill runs `reach` before the first search and explains a block in one or two sentences.
+  Repository guide: `docs/CLOUD_NETWORK.md`.
+
 ## 0.3.1, 2026-10-30
 
 - `status` accepts an optional `--host` and then reports readiness only for that host; without it the output is

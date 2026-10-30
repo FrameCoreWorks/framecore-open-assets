@@ -7,7 +7,7 @@ This repository contains only FrameCore Open Assets. Creative Studio, FrameCut a
 - Python 3.10 or newer and a shell/code execution tool.
 - Pillow for decoding images and texture packages.
 - FFmpeg and FFprobe for decoding audio/video.
-- Network access to the selected provider's documented domains for live requests.
+- Network access to the selected provider's documented domains for live requests. `runtime.py reach` checks it; in a cloud container follow [Running Open Assets in a cloud container](docs/CLOUD_NETWORK.md).
 
 Run the bundled `status` command before sourcing media. Install missing dependencies only with the user's authorization. Tests and packaging need the versions listed in `requirements-dev.txt`; FFmpeg is not needed for the existing offline test suite.
 
@@ -18,7 +18,7 @@ Run the bundled `status` command before sourcing media. Install missing dependen
 3. Give Plugin Creator the generated ZIP from code execution, not a ZIP of the whole repository. Verify the returned release, component diagnostics and stored file contents.
 4. Resolve the installed `open-assets` skill in the actual host, then run its runtime `status`.
 
-The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.3.1 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
+The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.4.0 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
 
 Ordinary ChatGPT without code execution or permitted network access can plan the work but cannot execute the CLI. Work execution evidence does not establish readiness in another host.
 
@@ -37,8 +37,8 @@ it against the git blob hashes and zips it there:
    version, the commit named "Open Assets <version>" in the history, as OLD).
 2. Choose the files: a first installation takes every file; an update takes every path whose NEW hash differs from
    OLD or that is new, deletes the paths in OLD but not in NEW, and merges any private edit by hand.
-   The plugin's `tests/` folder (19 files, 100 KB) is not needed at run time and may be left out (46 files and
-   137 KB remain).
+   The plugin's `tests/` folder (20 files, 108 KB) is not needed at run time and may be left out (46 files and
+   141 KB remain).
 3. Read each chosen file through the connector and write its exact text in code execution under
    `/mnt/data/open-assets/<path>` (`pathlib.Path(...).write_text(text, encoding='utf-8')`; for a long file several
    cells that append in order). Keep every character, including the final newline. Write

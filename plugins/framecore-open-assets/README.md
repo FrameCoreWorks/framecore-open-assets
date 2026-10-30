@@ -36,8 +36,8 @@ No Work test proves Claude Code, Claude apps or Codex behavior.
 
 ## Developer checks
 
-Run `python3 tests/runtime_test.py`, `python3 tests/providers_test.py`, `python3 tests/package_test.py`
-and `python3 tests/contract_test.py` from this plugin directory. The repository's full check runs all four. Tests cover observed API response shapes, rights gates,
+Run `python3 tests/runtime_test.py`, `python3 tests/providers_test.py`, `python3 tests/package_test.py`,
+`python3 tests/contract_test.py` and `python3 tests/network_test.py` from this plugin directory. The repository's full check runs all five. Tests cover observed API response shapes, rights gates,
 provenance tampering, HTTP blocks/cache/budgets, actual image decoding and package discovery.
 No test installs upstream software or makes a provider request. Live CLI tests need separate
 authorization and are not part of these checks.

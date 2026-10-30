@@ -1,5 +1,13 @@
 # Validation
 
+## 0.4.0 source (2026-10-30)
+
+Execution environment: Claude Code cloud container, Linux, default network policy. Before (0.3.1 code path): a proxy refusal of a Commons search surfaced as
+`transport_error` (`Tunnel connection failed: 403 Forbidden`). After: `runtime.py reach` reported
+`network: blocked`, no ready providers and 32 refused hosts; the same search failed with `network_blocked` and the
+workaround `next_action`. `python3 tools/check.py`: PASS (runtime 20, providers 7, package 4, contract 17, network 7, Codex installer 4 tests; reproducible ZIP; extracted runtime status); `network_test.py` uses a local fake proxy and makes
+no provider calls. Behaviour after an allowlist change, Codex, Claude apps and the hosted ChatGPT Work update: NOT_RUN.
+
 ## 0.3.1 source (2026-10-30)
 
 Fixes from the 2026-10-30 fresh-install test of Studio, Toolbox and Open Assets. Execution environment: Claude Code on macOS, Python 3.9.6 for `tools/check.py`, Python 3.13 for the extracted runtime. `python3 tools/check.py`: PASS (runtime 20, providers 7, package 4, contract 17, Codex installer 4 tests; reproducible ZIP; extracted runtime status). Smoke test: `tools/install_codex.py install` then `verify` into fresh absolute paths: FILES_VERIFIED, 65 files; `runtime.py status --host codex` from the bundle: 0.3.1, host results for `codex` only; `verify` still passes after the runtime wrote `__pycache__`. Codex session activation, hosted ChatGPT Work update to 0.3.1 and live provider requests: NOT_RUN.

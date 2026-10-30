@@ -32,6 +32,16 @@ Work and label its result Claude. A shell running in a Claude app is distinct fr
 With no code execution or permitted network, explain the missing capability and provide a sourcing
 plan or commands. Do not claim a search/download ran. Ask before changing route.
 
+Before the first search in a session, run `python3 <runtime> reach --provider <each planned provider>`.
+It only opens a connection to each provider host (no HTTP request) and is needed most in cloud and
+sandboxed containers, whose network policy often blocks these hosts. A `blocked` provider, or a
+`network_blocked` error from a search, means this environment refused the connection: do not search
+it or retry. Say so in one or two sentences, then offer the three ways on: (1) allow the hosts that
+`python3 <runtime> domains` prints, one per line (in a Claude Code cloud project: Project settings,
+Cloud environment, Add cloud environment, Network access Custom, keep the package-manager box ticked,
+paste them into Allowed domains); (2) run the task on a computer with open internet; (3) continue with
+the user's own files or assets made in code. Search only `ready_providers`; never claim a blocked one ran.
+
 Use a writable state directory outside the installed package; the default is `~/.framecore-open-assets`.
 Its cache, pacing locks, daily quota and signed readiness evidence are local to this host. A new or
 ephemeral sandbox may need verification again. One process per provider; never bypass a lock or quota.

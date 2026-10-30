@@ -79,7 +79,7 @@ REFUSED = {'rights_blocked', 'policy_hold', 'unknown_provider', 'unsafe_url', 'u
            'host_mismatch', 'package_output', 'output_exists', 'input_limit', 'unsupported_category', 'invalid_model',
            'missing_hypothesis', 'invalid_index', 'result_size', 'daily_quota', 'untrusted_result', 'stale_result',
            'size_limit', 'provider_mismatch'}
-BLOCKED = {'decoder_missing'}
+BLOCKED = {'decoder_missing', 'network_blocked'}
 
 
 def status_for(error_kind):
