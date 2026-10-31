@@ -21,6 +21,18 @@ python3 plugins/framecore-open-assets/scripts/runtime.py status
 
 Python 3.10+ runs the CLI. Pillow verifies images and texture packages; FFmpeg and FFprobe verify audio/video. Search and download also require permitted network access; `runtime.py reach` shows which providers this environment can connect to, and [cloud containers](docs/CLOUD_NETWORK.md) lists the hosts to allow. Installation alone does not establish provider readiness.
 
+### If search fails
+
+Most failed searches are a network policy, not a broken plugin. Run:
+
+```bash
+python3 plugins/framecore-open-assets/scripts/runtime.py reach
+```
+
+- `reachable` for every provider: the network is fine; retry, or try another provider or category.
+- `blocked` (or a search error `network_blocked`): your environment refuses those hosts. Add the `allowlist` that `reach` prints to the environment's allowed domains (`runtime.py domains` prints the same list); [cloud containers](docs/CLOUD_NETWORK.md) shows where for Claude Code cloud. Then start a new session.
+- `unreachable` or `unknown` for one provider: that provider is down or slow; the others still work.
+
 ## Providers and boundaries
 
 The release contains 14 providers and 23 provider/category combinations: Wikimedia Commons, The Met, Cleveland Museum of Art, Rijksmuseum, Library of Congress, NASA, LibriVox, Finna, Wellcome Collection, ambientCG, PhyloPic, Poly Haven, SMK and SFXMint. Each has a separate adapter and rights rules. Broad music, recorded SFX and contemporary stock footage remain limited.
