@@ -64,7 +64,14 @@ Where code execution can read the whole repository (a host with network), the re
 
 ## Codex
 
-Use the host's native plugin installation/discovery flow with the complete `plugins/framecore-open-assets` directory or its generated archive, when that host offers one. Keep `plugin.json`, `.codex-plugin/plugin.json`, the skill, scripts, provider registry and references together. Do not install only `SKILL.md` into personal skills: its relative runtime would be missing.
+Where Codex has its own plugin manager (`codex plugin marketplace --help` prints its commands; Codex CLI 0.166.0, checked 2026-10-31), install from Creative Studio's marketplace, which pins this plugin:
+
+```sh
+codex plugin marketplace add FrameCoreWorks/framecore-works-creative-studio
+codex plugin add framecore-open-assets@framecore-works
+```
+
+Codex then lists the skill as `framecore-open-assets:open-assets`; update with `codex plugin marketplace upgrade framecore-works` and the same `codex plugin add`. Never also create the native entry below for the same user: both would load. Otherwise use the host's native plugin installation/discovery flow with the complete `plugins/framecore-open-assets` directory or its generated archive, when that host offers one. Keep `plugin.json`, `.codex-plugin/plugin.json`, the skill, scripts, provider registry and references together. Do not install only `SKILL.md` into personal skills: its relative runtime would be missing.
 
 ### Native entry with the complete bundle
 
@@ -89,7 +96,7 @@ For users with access to this GitHub repository, run inside Claude Code:
 /plugin install framecore-open-assets@framecore-open-assets
 ```
 
-The marketplace name is `framecore-open-assets`; it contains exactly one plugin with the same technical name. You can also add an authenticated local checkout as the marketplace. A private repository requires GitHub access in the installing environment.
+The marketplace name is `framecore-open-assets`; it contains exactly one plugin with the same technical name. Creative Studio's marketplace carries the same plugin as `framecore-open-assets@framecore-works`; install it from one marketplace only. If both copies are installed, both stay enabled (observed with Claude Code 2.1.316 on 2026-10-31 for Toolbox), so remove one with `claude plugin uninstall framecore-open-assets@framecore-open-assets`. You can also add an authenticated local checkout as the marketplace. A private repository requires GitHub access in the installing environment.
 
 After installation, resolve its installed runtime and run `status`. Use `--host claude_code` for actual Claude Code execution. The official [marketplace documentation](https://code.claude.com/docs/en/plugin-marketplaces) describes repository and local-path installation.
 
