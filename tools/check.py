@@ -13,7 +13,7 @@ try:
     import yaml
 except ModuleNotFoundError:
     sys.exit('tools/check.py needs the development requirements: python3 -m pip install -r requirements-dev.txt '
-             '(PyYAML and Pillow; use a virtual environment). The plugin itself does not need them.')
+             '(PyYAML and Pillow; use a virtual environment). The plugin CLI itself does not use PyYAML.')
 
 from package import ROOT, PLUGIN, build, source_files
 
