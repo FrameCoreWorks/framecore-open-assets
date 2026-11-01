@@ -59,6 +59,7 @@ The nested plugin directory preserves the established packaging contract. It is 
 ## Validate and package
 
 ```bash
+python3 -m pip install -r requirements-dev.txt
 python3 tools/check.py
 python3 tools/package.py
 ```
