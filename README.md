@@ -4,6 +4,8 @@ Standalone asset-sourcing plugin for **ChatGPT Work, Codex and Claude**, maintai
 
 **Current plugin version: 0.4.1** (source; the hosted ChatGPT Work release is still 0.2.1 until it is updated, see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
 
+> **Working in a cloud session (Claude Code on the web or phone, a cloud container)?** Media sites are often blocked there by default. Before your first search, ask the assistant to run `runtime.py reach` (or run the command under [If search fails](#if-search-fails)); it shows in a few seconds which providers this environment can reach and prints the list of domains to allow.
+
 ## Start here
 
 - [Installation and local use](INSTALL.md)
