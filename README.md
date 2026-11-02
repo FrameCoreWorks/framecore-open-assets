@@ -8,7 +8,7 @@ Standalone asset-sourcing plugin for **ChatGPT Work, Codex and Claude**, maintai
 
 ## Start here
 
-- [Installation and local use](INSTALL.md)
+- [Installation and local use](INSTALL.md) (ChatGPT Work: install OpenAI's Plugin Creator first, see [ChatGPT Work](INSTALL.md#chatgpt-work))
 - [Provider coverage](plugins/framecore-open-assets/skills/open-assets/references/provider-index.md)
 - [Commands and output contract](plugins/framecore-open-assets/skills/open-assets/references/contract.md)
 - [Development and release workflow](CONTRIBUTING.md)

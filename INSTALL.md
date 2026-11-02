@@ -13,6 +13,8 @@ Run the bundled `status` command before sourcing media. Install missing dependen
 
 ## ChatGPT Work
 
+Before you start: ChatGPT Work saves plugins only through OpenAI's own **Plugin Creator**, which a new user often does not have yet. Install it once: side menu > **Plugins** (Wtyczki) > **Search plugins** (Wyszukaj wtyczki) > `Plugin Creator` > the one by **OpenAI** (not look-alikes such as "Plugin Creator Plus") > **+** or **Install**. Then, in a new Work conversation, type `@`, select **Plugin Creator** from the menu (it shows as **@Plugin Creator**) and paste the request. Codex needs nothing extra: Plugin Creator is built in there as `$plugin-creator`. An assistant without Plugin Creator's create and update tools in the conversation saves nothing and gives the user these steps instead.
+
 1. Build the single-plugin archive with `python3 tools/package.py` where code execution has this repository; otherwise build it from files read as text ([Update without a ZIP](#update-without-a-zip-owner-decision-2026-10-29)). Never ask the user to upload a ZIP.
 2. In Plugin Creator, resolve any existing **FrameCore Open Assets** plugin before saving. Inspect its current release and files. Update that existing identity with its current release guard; create a new plugin only when the user wants an installation and none exists.
 3. Give Plugin Creator the generated ZIP from code execution, not a ZIP of the whole repository. Verify the returned release, component diagnostics and stored file contents.
