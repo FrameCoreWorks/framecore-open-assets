@@ -2,7 +2,7 @@
 
 Standalone asset-sourcing plugin for **ChatGPT Work, Codex and Claude**, maintained by FrameCore Works. Find media through documented public APIs, check each asset's rights, and download verified files with source and attribution records.
 
-**Current plugin version: 0.4.1** (source; the hosted ChatGPT Work release is still 0.2.1 until it is updated, see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
+**Current plugin version: 0.4.2** (source; the hosted ChatGPT Work release is still 0.2.1 until it is updated, see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
 
 > **Working in a cloud session (Claude Code on the web or phone, a cloud container)?** Media sites are often blocked there by default. Before your first search, ask the assistant to run `runtime.py reach` (or run the command under [If search fails](#if-search-fails)); it shows in a few seconds which providers this environment can reach and prints the list of domains to allow.
 
@@ -31,9 +31,11 @@ Most failed searches are a network policy, not a broken plugin. Run:
 python3 plugins/framecore-open-assets/scripts/runtime.py reach
 ```
 
-- `reachable` for every provider: the network is fine; retry, or try another provider or category.
+`reach` only opens a connection (TCP, or CONNECT through a proxy); it sends no HTTP request. So:
+
+- `reachable`: the host accepts connections. That does not prove the search works: the real request can still get HTTP 401, 403 or 429, a CAPTCHA page or a proxy refusal. Read the error the search itself returned and follow it (for 429, wait; never retry in a loop), and ask before switching to another provider or category.
 - `blocked` (or a search error `network_blocked`): your environment refuses those hosts. Add the `allowlist` that `reach` prints to the environment's allowed domains (`runtime.py domains` prints the same list); [cloud containers](docs/CLOUD_NETWORK.md) shows where for Claude Code cloud. Then start a new session.
-- `unreachable` or `unknown` for one provider: that provider is down or slow; the others still work.
+- `unreachable` or `unknown` for one provider: no connection was made; the provider may be down, or a local DNS or proxy problem may be in the way. The other providers can still work.
 
 ## Providers and boundaries
 

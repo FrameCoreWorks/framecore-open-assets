@@ -1,5 +1,11 @@
 # Validation
 
+## 0.4.2 source (2026-11-04)
+
+Documentation fixes from the GPT Astra audit (see `plugins/framecore-open-assets/CHANGELOG.md`); no runtime code
+changed. `python3 tools/check.py` passes in a Claude Code cloud container (Python 3.13, Pillow 13.0.0). Hosted
+ChatGPT Work update, Codex and Claude apps: NOT_RUN.
+
 ## 0.4.1 source (2026-10-31)
 
 Execution environment: Claude Code cloud container, Linux, provider hosts blocked. New offline tests (quoted

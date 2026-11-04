@@ -25,7 +25,8 @@ with the file. The sidecar is provenance, not a model/property release or a guar
 
 ## Task envelope
 
-Every command accepts `--envelope-out <new file>`, `--task-id`, `--requester name@version` and `--owner`.
+The four task commands (`status`, `search`, `verify`, `download`) accept `--envelope-out <new file>`, `--task-id`,
+`--requester name@version` and `--owner`; the read-only helpers `domains` and `reach` write no envelope.
 The envelope is a `framecore-task-result/1` document defined by
 [the shared schema](../../../contracts/framecore-task.schema.json); stdout is unchanged. It lists the
 signed search file as input, the media file and its sidecar as outputs with SHA-256 and bytes, the

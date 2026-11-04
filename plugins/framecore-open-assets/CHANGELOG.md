@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.2, 2026-11-04
+
+Trigger: GPT Astra external audit 2026-11-04 (Open Assets 0.4.1 at `b15c35a`), each finding checked in the source.
+
+- `contract.md` said every command accepts the envelope flags; only `status`, `search`, `verify` and `download` do
+  (`domains` and `reach` are read-only helpers with no envelope). Audit ORCH-08.
+- The Commons dossier still said only JPEG was tested; the 0.2.0 ChatGPT Work qualification covered all six
+  packaged categories, and the dossier now says so. Audit ASSET-002 (the index was right).
+- Repository: the README's "If search fails" explains that `reach` checks a connection only, not an HTTP answer
+  (401, 403, 429, CAPTCHA or proxy refusals still happen), and asks before switching provider. Audit ASSET-001.
+  CI pins Pillow 13.0.0 and its actions to full commits (`6eacf91`).
+- Checks: `tools/check.py` passes. Host reruns: NOT_RUN.
+
 ## 0.4.1, 2026-10-31
 
 Trigger: the 2026-10-31 Codex desktop retest of 0.3.1 (report U6, U12, U13).
