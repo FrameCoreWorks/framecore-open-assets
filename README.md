@@ -2,7 +2,7 @@
 
 Standalone asset-sourcing plugin for **ChatGPT Work, Codex and Claude**, maintained by FrameCore Works. Find media through documented public APIs, check each asset's rights, and download verified files with source and attribution records.
 
-**Current plugin version: 0.4.3.** The ChatGPT Work copy is updated from this source; the only stored readback receipt is for 0.2.1 (see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
+**Current plugin version: 0.5.0.** The ChatGPT Work copy is updated from this source; the only stored readback receipt is for 0.2.1 (see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
 
 > **Working in a cloud session (Claude Code on the web or phone, a cloud container)?** Media sites are often blocked there by default. Before your first search, ask the assistant to run `runtime.py reach` (or run the command under [If search fails](#if-search-fails)); it shows in a few seconds which providers this environment can reach and prints the list of domains to allow.
 
@@ -44,6 +44,15 @@ The release contains 15 providers and 24 provider/category combinations: Wikimed
 The runtime preserves source, creator, licence, attribution, file hash and decoder evidence. It blocks unknown or unsupported rights and checks the current host before routine downloads. Provider eligibility is separate from permission to reuse an individual asset. See the skill and provider dossiers for the operational rules.
 
 There is no hosted MCP server or API credential requirement. Public provider requests leave the executing host; the runtime does not upload client media. Keep downloaded assets, cache, signing keys and readiness records outside the plugin and Git repository.
+
+### Reference-only sources: Pinterest
+
+Pinterest is **not** one of the providers above and nothing from it is cleared for finished work. Since 0.5.0 the
+skill describes it as a separate, reference-only source for moodboards, style research and reference packs, used
+through the optional Pinterest connector (FrameCore Works Toolbox entry `pinterest-references`, a pinned local MCP
+server that needs Google Chrome and Node.js; no account or key). Kept pins are saved under `references/pinterest/`
+with a `.reference.json` naming the pin link and author, apart from licensed assets. Open Assets never calls the
+connector itself, and works the same without it. Details: [reference sources](plugins/framecore-open-assets/skills/open-assets/references/reference-sources.md).
 
 ## Repository layout
 

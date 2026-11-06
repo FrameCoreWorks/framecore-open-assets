@@ -23,3 +23,5 @@ Only qualified providers with an observed live search/download/decode are packag
 Fifteen providers, twenty-four confirmed media paths. LoC is limited to dedicated Gottlieb photographs; Rijksmuseum to explicit PDM/CC0 image records. NASA supplies photos/video. Incompetech adds one composer's CC BY catalogue with BPM and mood; broader music and recorded SFX remain gaps.
 
 Work search/download evidence is dated 2026-10-28; installed-client behavior in Codex/Claude remains NOT_RUN. Every new host/category still verifies its first actual file. A successful sample cannot guarantee future availability or every catalogue item.
+
+Pinterest is not a provider: it is a reference-only source used through an optional separate connector. See [reference sources](reference-sources.md).

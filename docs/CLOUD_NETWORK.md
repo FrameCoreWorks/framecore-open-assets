@@ -19,7 +19,7 @@ instead of a generic `transport_error`.
 ## Allow the provider hosts
 
 `runtime.py domains` prints the allowlist, one host per line, generated from `providers.json` (a leading
-`*.` covers every subdomain). For version 0.4.3 it is (0.4.0 to 0.4.2: the same list without `incompetech.com`):
+`*.` covers every subdomain). For versions 0.4.3 and 0.5.0 it is (0.4.0 to 0.4.2: the same list without `incompetech.com`; the Pinterest reference route of 0.5.0 runs in a separate connector, not here):
 
 ```text
 commons.wikimedia.org
