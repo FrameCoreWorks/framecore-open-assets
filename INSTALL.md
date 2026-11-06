@@ -33,6 +33,12 @@ code execution has no network (github.com does not resolve); the GitHub connecto
 but writes no file into code execution. So the model itself writes each file's text into code execution, checks
 it against the git blob hashes and zips it there:
 
+A failed or blocked download in code execution is expected in Work and is never a reason to stop (owner report
+2026-11-06: an update stopped at "the environment could not download the GitHub files"): copy each file's text from
+the connector into code cells yourself. A manifest that the saved plugin extends with private host settings is
+merged: set only the keys that changed between OLD and NEW (usually `version`), keep the rest, and check it by its
+`version` instead of its blob hash.
+
 1. Resolve `main` to one full commit. List `plugins/framecore-open-assets/` recursively at that commit through the connector; each
    entry carries its git blob `sha` and `size` (NEW). Search Plugin Creator's saved plugins for FrameCore Open
    Assets: none means a first installation; otherwise this is an update of that identity (list the commit that released the saved
