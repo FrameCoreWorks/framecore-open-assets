@@ -130,3 +130,12 @@ service without task-specific authorization.
 
 Record failures as FAIL, unexecuted host/category checks as NOT_RUN and unresolved facts as Unknown.
 Never infer Claude readiness from Work tests or installed-client behavior from package validation.
+
+## 6. Reference-only sources (not assets)
+
+For a moodboard, style research or a reference pack, the user may want Pinterest. It is a reference source, never an
+asset provider: it is not in `providers.json`, its images are not cleared for finished work, and this runtime never
+calls it. Use it only through the optional Pinterest connector (Toolbox `pinterest-references`) when its
+`pinterest_*` tools are present, save kept files under `references/pinterest/` with a `.reference.json` (pin link,
+author or `Unknown`), and keep them apart from assets. Without the connector, say so in one sentence and continue.
+Read [reference sources](references/reference-sources.md) first.

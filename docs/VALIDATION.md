@@ -1,5 +1,11 @@
 # Validation
 
+## 0.5.0 source (2026-11-06)
+
+Documentation and skill text only: Pinterest as a reference-only source through the optional Toolbox connector; no
+runtime or provider change. `python3 tools/check.py`: see the commit. Connector use from Open Assets, hosted ChatGPT
+Work update, Codex and Claude apps: NOT_RUN.
+
 ## 0.4.3 source (2026-11-06)
 
 New Incompetech music provider. Live in a Claude Code cloud container (host `claude_code`, default network

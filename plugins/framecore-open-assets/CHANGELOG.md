@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.0, 2026-11-06
+
+Trigger: owner request 2026-11-06 to add Pinterest (terryso/mcp-pinterest) to Open Assets as a source of references,
+clearly separated from the free sources for commercial use; delivered as a pull request at the owner's request.
+
+- New skill section 6 and `references/reference-sources.md`: Pinterest as a reference-only source (moodboard, style
+  research, reference pack), used through the optional Toolbox connector `pinterest-references`. Kept pins go to
+  `references/pinterest/` with a `.reference.json` (pin link, author or `Unknown`, query, date, "not cleared").
+- No runtime change: Pinterest is not in `providers.json` and the runtime never calls it. Without the connector the
+  skill says so and continues.
+- Checks: `tools/check.py`. Host behaviour: NOT_RUN.
+
 ## 0.4.3, 2026-11-06
 
 Trigger: the owner asked to add Incompetech after the 2026-11-06 Deep Research review of new free sources ("dołącz do Open Assets, jeśli pasuje na 100%"); music was the catalogue's largest gap (Commons only).
