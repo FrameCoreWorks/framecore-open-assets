@@ -261,5 +261,22 @@
     "reference": "skills/open-assets/references/providers/sfxmint.md",
     "smoke_query": "click",
     "smoke_category": "sfx"
+  },
+  "incompetech": {
+    "name": "Incompetech (Kevin MacLeod)",
+    "policy": "documented",
+    "reason": "",
+    "module": "incompetech",
+    "categories": [
+      "music"
+    ],
+    "allowed_domains": [
+      "incompetech.com"
+    ],
+    "min_interval_seconds": 2,
+    "sources_read": "2026-11-06",
+    "reference": "skills/open-assets/references/providers/incompetech.md",
+    "smoke_query": "calm piano",
+    "smoke_category": "music"
   }
 }

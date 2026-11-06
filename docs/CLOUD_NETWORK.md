@@ -19,7 +19,7 @@ instead of a generic `transport_error`.
 ## Allow the provider hosts
 
 `runtime.py domains` prints the allowlist, one host per line, generated from `providers.json` (a leading
-`*.` covers every subdomain). For versions 0.4.0 to 0.4.2 it is:
+`*.` covers every subdomain). For version 0.4.3 it is (0.4.0 to 0.4.2: the same list without `incompetech.com`):
 
 ```text
 commons.wikimedia.org
@@ -56,6 +56,7 @@ api.smk.dk
 iip-thumb.smk.dk
 iip.smk.dk
 sfxmint.com
+incompetech.com
 ```
 
 In a Claude Code cloud project: open Project settings, open the Cloud environment menu and choose Add

@@ -12,9 +12,9 @@ paid generation, account setup or browser scraping.
 
 ## Provider coverage
 
-Fourteen executable providers: Wikimedia Commons, The Met, Cleveland, Rijksmuseum (PDM/CC0 images), Library of Congress (dedicated Gottlieb photographs), NASA (photos/video), LibriVox, Finna, Wellcome, ambientCG, PhyloPic, Poly Haven, SMK and SFXMint. Each provider has its own documented module and rights gate. NASA/LibriVox require item/use-specific review; SA requires deliberate acceptance.
+Fifteen executable providers: Wikimedia Commons, The Met, Cleveland, Rijksmuseum (PDM/CC0 images), Library of Congress (dedicated Gottlieb photographs), NASA (photos/video), LibriVox, Finna, Wellcome, ambientCG, PhyloPic, Poly Haven, SMK, SFXMint and Incompetech (music, CC BY 4.0). Each provider has its own documented module and rights gate. NASA/LibriVox require item/use-specific review; SA requires deliberate acceptance.
 
-Only confirmed provider/category paths are included. See [provider details](skills/open-assets/references/provider-index.md). There is no arbitrary provider-count cap. Broad music, recorded SFX and contemporary stock footage remain gaps.
+Only confirmed provider/category paths are included. See [provider details](skills/open-assets/references/provider-index.md). There is no arbitrary provider-count cap. Broad multi-artist music, recorded SFX and contemporary stock footage remain gaps.
 
 ## Installation and capabilities
 

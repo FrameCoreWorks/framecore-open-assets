@@ -70,4 +70,23 @@ class Policies(unittest.TestCase):
             self.assertEqual(error.exception.kind,'wrong_media_type')
             self.assertFalse((Path(root)/'photo.jpg').exists())
 
+    def test_incompetech_matches_terms_skips_oversized_tracks_and_credits_kevin_macleod(self):
+        # 2026-11-06: 30 catalogue tracks run over 13 minutes (up to 141 MB) and exceed the 32 MiB cap.
+        fixture=json.loads((Path(__file__).parent/'fixtures'/'incompetech-search.json').read_text())
+        c=Mock();c.policy=core.REGISTRY['incompetech'];c.json.return_value=fixture
+        items=runtime.search_one(c,'calm piano','music',5)
+        self.assertEqual([i['title'] for i in items],['Grand Dark Waltz Trio Vivace'])
+        item=items[0]
+        self.assertEqual((item['license'],item['rights_status']),('CC BY 4.0','eligible'))
+        self.assertEqual(item['creator'],'Kevin MacLeod (incompetech.com)')
+        self.assertTrue(item['source_page'].endswith('isrc=USUAN2100027'))
+        self.assertEqual(item['variants'][0]['url'],
+                         'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Grand%20Dark%20Waltz%20Trio%20Vivace.mp3')
+        self.assertEqual(item['variants'][0]['bpm'],'140')
+        self.assertTrue(any('Credit required' in w for w in item['warnings']))
+        self.assertEqual(runtime.search_one(c,'relaxation','music',5),[])
+        self.assertEqual(len(runtime.search_one(c,'','music',5)),2)
+        with self.assertRaises(core.Refused):
+            runtime.search_one(c,'piano','sfx',1)
+
 if __name__=='__main__':unittest.main()

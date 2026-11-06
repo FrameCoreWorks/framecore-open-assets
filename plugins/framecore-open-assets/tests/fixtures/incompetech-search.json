@@ -1,0 +1,53 @@
+[
+ {
+  "title": "Grand Dark Waltz Trio Vivace",
+  "filename": "Grand Dark Waltz Trio Vivace.mp3",
+  "length": "00:02:52",
+  "instruments": "Piano, Drum Kit, Bass",
+  "genre": "24",
+  "bpm": "140",
+  "description": "Whilst learning to waltz, I noticed that the music wasn't flowing exactly with the explanations of how to move - so I fixed it. This piece overemphasizes the first beat with a hard slide in on the downbeat. Should make it easier for beginners to understand what is going on. The are 3 tempos to practice different styles of waltz, or just work up to the fast one!",
+  "feel": "Relaxed, Calming, Grooving",
+  "uploaded": "2021-07-12",
+  "isrc": "USUAN2100027",
+  "collection": "32",
+  "sheetmusic": null,
+  "video": null,
+  "itunes": "https://music.apple.com/us/album/grand-dark-waltz-trio-vivace/1571030415?i=1571030432",
+  "filmmusicURL": "https://incompetech.filmmusic.io/song/7924-grand-dark-waltz-trio-vivace"
+ },
+ {
+  "title": "Deep Relaxation",
+  "filename": "Deep Relaxation.mp3",
+  "length": "00:51:08",
+  "instruments": "Piano, Synth",
+  "genre": "22",
+  "bpm": null,
+  "description": "The main melody is a stack of harp, piano, and electric piano. The bass is just a nice mono synth.",
+  "feel": "Calming, Relaxed",
+  "uploaded": "2020-01-05",
+  "isrc": "USUAN1900045",
+  "collection": "27",
+  "sheetmusic": null,
+  "video": "https://youtu.be/fgauFOtjRTE",
+  "itunes": "https://music.apple.com/us/album/deep-relaxation/1492031560?i=1492031572&app=itunes",
+  "filmmusicURL": "https://incompetech.filmmusic.io/song/5726-deep-relaxation-preview/"
+ },
+ {
+  "title": "The Britons",
+  "filename": "The Britons.mp3",
+  "length": "00:05:07",
+  "instruments": "Lute, Recorder, Drums, Flute, Guitar",
+  "genre": "22",
+  "bpm": "180",
+  "description": "Tavern music like from the olden days.",
+  "feel": "Ren Faire, Medieval",
+  "uploaded": "2026-06-29",
+  "isrc": "USUAN2600004",
+  "collection": null,
+  "sheetmusic": null,
+  "video": null,
+  "itunes": null,
+  "filmmusicURL": null
+ }
+]

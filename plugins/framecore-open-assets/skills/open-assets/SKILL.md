@@ -50,7 +50,7 @@ ephemeral sandbox may need verification again. One process per provider; never b
 
 Match the category and subject to the documented provider modules. `providers.json` and
 [provider rules](references/provider-index.md) list only qualified, implemented providers and their
-confirmed media categories. Every listed path has dated Work search/download/decode evidence;
+confirmed media categories. Every listed path has dated live search/download/decode evidence (Work, or Claude Code for Incompetech);
 verify current readiness on the executing host before delivery. No accounts, keys, paid generation,
 scraping, CAPTCHA solving, browser impersonation, copied cookies or proxy/IP rotation.
 
@@ -62,7 +62,7 @@ python3 <runtime> search --host chatgpt_work --model <actual-model> --provider m
 
 Categories: `photos`, `graphics`, `audio`, `music`, `sfx`, `video`. Query terms do not prove semantic
 fit: an artwork reproduction is not lifestyle stock; narrated literature is not music; a texture is
-not an illustration. Music and recorded-SFX coverage remain limited. Explain those gaps.
+not an illustration. Music is Commons plus Incompetech (one composer, CC BY 4.0 with required credit, BPM/mood metadata); recorded-SFX coverage remains limited. Explain those gaps.
 
 Use one provider or explicitly select `--provider all` for a federated search across documented
 providers supporting that category. This is an up-front selection, not an automatic failure fallback.

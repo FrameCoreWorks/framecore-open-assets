@@ -1,5 +1,13 @@
 # Validation
 
+## 0.4.3 source (2026-11-06)
+
+New Incompetech music provider. Live in a Claude Code cloud container (host `claude_code`, default network
+policy): `search --provider incompetech --category music --query "calm piano"` returned three eligible CC BY 4.0
+records; `verify` downloaded "Grand Dark Waltz Trio Vivace" (3,449,364 bytes) and decoded it fully (172.4 s MP3).
+`python3 tools/check.py`: see the commit. Hosted ChatGPT Work update and Work search/download, Codex and Claude
+apps: NOT_RUN.
+
 ## 0.4.2 source (2026-11-04)
 
 Documentation fixes from the GPT Astra audit (see `plugins/framecore-open-assets/CHANGELOG.md`); no runtime code

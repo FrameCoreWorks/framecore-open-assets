@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.3, 2026-11-06
+
+Trigger: the owner asked to add Incompetech after the 2026-11-06 Deep Research review of new free sources ("dołącz do Open Assets, jeśli pasuje na 100%"); music was the catalogue's largest gap (Commons only).
+
+- New provider `incompetech` (music): Kevin MacLeod's catalogue under CC BY 4.0 through the public `pieces.json`
+  and direct MP3 files, no account or key. Records carry BPM, feel and instruments on the variant, the site's
+  required credit and a Content ID warning. Pieces over the 32 MiB cap (30 of 1,443, up to 141 MB) are skipped.
+- Allowlist: `incompetech.com` (`docs/CLOUD_NETWORK.md`).
+- Evidence: live search, download and full decode in a Claude Code cloud container (dossier). ChatGPT Work: NOT_RUN.
+- Checks: `tools/check.py` passes; new regression test with an observed catalogue fixture.
+
 ## 0.4.2, 2026-11-04
 
 Trigger: GPT Astra external audit 2026-11-04 (Open Assets 0.4.1 at `b15c35a`), each finding checked in the source.
