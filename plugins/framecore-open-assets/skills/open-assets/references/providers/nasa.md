@@ -6,4 +6,4 @@ Sources: [official API PDF, v1.22](https://images.nasa.gov/docs/images.nasa.gov_
 
 Implementation note: the provider register records the current policy gate. Historical HTTP tests do not prove runtime or host readiness.
 
-Work evidence dated 2026-10-28 confirms actual photo and video search/download/decode. These are the two supported categories; item-specific rights review still applies.
+Work evidence dated 2026-10-28 confirms actual photo and video search/download/decode. Audio (owner decision 2026-11-11, research DR-04): `media_type=audio` returns mostly podcast and mission recordings (55 hits for "apollo" on 2026-11-11); manifests list `~orig.mp3`, `~128k.mp3`, `~128k.m4a` and `~64k.m4a`, sometimes with a duplicate row. The adapter takes at most three audio records per search (one search plus three manifests) and lists the smallest renditions first. Audio search and manifests were read live on 2026-11-11; an audio download and decode on a host are NOT_RUN. Item-specific rights review (`review_nasa`) still applies to every category: recordings can contain third-party music, voices of identifiable people or guests.

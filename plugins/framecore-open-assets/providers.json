@@ -104,7 +104,8 @@
     "module": "nasa",
     "categories": [
       "photos",
-      "video"
+      "video",
+      "audio"
     ],
     "allowed_domains": [
       "images-api.nasa.gov",

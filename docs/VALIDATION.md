@@ -1,5 +1,9 @@
 # Validation
 
+## 0.6.0 source (2026-11-11)
+
+NASA audio added to the existing adapter. `python3 tools/check.py` and `python3 tools/package.py`: see the commit. Live: one audio search and two manifests read on 2026-11-11 (no download). Audio download/decode on a host, ChatGPT Work, Claude and Codex installs: NOT_RUN.
+
 ## 0.5.0 source (2026-11-06)
 
 Documentation and skill text only: Pinterest as a reference-only source through the optional Toolbox connector; no

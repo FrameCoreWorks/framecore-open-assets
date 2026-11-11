@@ -52,13 +52,21 @@ class Policies(unittest.TestCase):
                                                         'referred_to_by':[{'content':licence}]}]}]}]
             self.assertEqual(module.search(c,'work','graphics',1)[0]['rights_status'],expected)
 
-    def test_nasa_supports_only_confirmed_image_and_video_categories(self):
-        self.assertEqual(core.REGISTRY['nasa']['categories'], ['photos', 'video'])
+    def test_nasa_audio_lists_small_renditions_first_and_keeps_review(self):
+        # Owner decision 2026-11-11 (research DR-04): NASA audio in the existing adapter, review_nasa kept.
+        self.assertEqual(core.REGISTRY['nasa']['categories'], ['photos', 'video', 'audio'])
+        fixtures=Path(__file__).parent/'fixtures'
         c=Mock();c.policy=core.REGISTRY['nasa']
-        with self.assertRaises(core.Refused) as error:
-            runtime.search_one(c,'sample','audio',1)
-        self.assertEqual(error.exception.kind,'unsupported_category')
-        c.json.assert_not_called()
+        c.json.side_effect=[json.loads((fixtures/'nasa-audio-search.json').read_text()),json.loads((fixtures/'nasa-audio-manifest.json').read_text())]
+        items=runtime.search_one(c,'apollo','audio',5)
+        self.assertEqual(len(items),1)
+        self.assertIn('media_type=audio',c.json.call_args_list[0].args[0])
+        self.assertIn('page_size=3',c.json.call_args_list[0].args[0])
+        names=[v['label'] for v in items[0]['variants']]
+        self.assertEqual(names[0],'Ep433_Callsign White Flight~64k.m4a')
+        self.assertEqual(len(names),len(set(names)),'duplicate manifest rows are listed once')
+        self.assertNotIn('metadata.json',names)
+        self.assertEqual(items[0]['rights_status'],'review_nasa')
 
     def test_audio_cannot_be_delivered_as_a_photo(self):
         with tempfile.TemporaryDirectory() as root:

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0, 2026-11-11
+
+- NASA audio: the existing NASA adapter searches `media_type=audio` (owner decision 2026-11-11, research DR-04), at most three records per search, smallest renditions first, duplicate manifest rows removed; `review_nasa` unchanged. 25 provider/category paths.
+- Tests: fixture test for audio search, rendition order and review status (replaces the photos/video-only test). Live audio search and manifest read 2026-11-11; audio download/decode on a host NOT_RUN.
+
 ## 0.5.0, 2026-11-06
 
 Trigger: owner request 2026-11-06 to add Pinterest (terryso/mcp-pinterest) to Open Assets as a source of references,

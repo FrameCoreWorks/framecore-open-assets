@@ -9,7 +9,7 @@ Only qualified providers with an observed live search/download/decode are packag
 | Cleveland Museum of Art | graphics, photos | [cleveland](providers/cleveland.md) |
 | Rijksmuseum | graphics | [rijks](providers/rijks.md) |
 | Library of Congress (LoC) | photos | [loc](providers/loc.md) |
-| NASA Image and Video Library | photos, video | [nasa](providers/nasa.md) |
+| NASA Image and Video Library | photos, video, audio | [nasa](providers/nasa.md) |
 | LibriVox | audio | [librivox](providers/librivox.md) |
 | Finna (National Library of Finland) | photos | [finna](providers/finna.md) |
 | Wellcome Collection | photos, graphics | [wellcome](providers/wellcome.md) |
@@ -20,7 +20,7 @@ Only qualified providers with an observed live search/download/decode are packag
 | SFXMint (discovered through GitHub mapping) | sfx | [sfxmint](providers/sfxmint.md) |
 | Incompetech (Kevin MacLeod) | music | [incompetech](providers/incompetech.md) |
 
-Fifteen providers, twenty-four confirmed media paths. LoC is limited to dedicated Gottlieb photographs; Rijksmuseum to explicit PDM/CC0 image records. NASA supplies photos/video. Incompetech adds one composer's CC BY catalogue with BPM and mood; broader music and recorded SFX remain gaps.
+Fifteen providers, twenty-five confirmed media paths. LoC is limited to dedicated Gottlieb photographs; Rijksmuseum to explicit PDM/CC0 image records. NASA supplies photos/video. Incompetech adds one composer's CC BY catalogue with BPM and mood; broader music and recorded SFX remain gaps.
 
 Work search/download evidence is dated 2026-10-28; installed-client behavior in Codex/Claude remains NOT_RUN. Every new host/category still verifies its first actual file. A successful sample cannot guarantee future availability or every catalogue item.
 
