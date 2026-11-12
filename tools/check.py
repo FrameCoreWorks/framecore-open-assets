@@ -77,7 +77,7 @@ def main():
                                 check=True, capture_output=True, text=True)
         data = json.loads(status.stdout)
         require(data['version'] == version and data['network'] == 'NOT_RUN', 'Extracted runtime status failed')
-        require(len(data['providers']) == 20, 'Extracted provider registry differs')
+        require(len(data["providers"]) == 22, 'Extracted provider registry differs')
     print('PASS: standalone source, all test suites, reproducible archive and isolated runtime status')
 
 

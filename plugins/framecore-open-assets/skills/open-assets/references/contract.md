@@ -69,7 +69,7 @@ JSON with `status`, `error`, `message`, request `trace` and `next_action`. The c
   `invalid_json`, `api_error`, `size_limit`, `size_or_time_limit`.
 - Files and decoding: `hash_mismatch`, `size_mismatch`, `wrong_media_type`, `decoder_missing`,
   `unsupported_media`, `not_media`, `decode_failed`, `pixel_limit`, `archive_limit`, `archive_crc`,
-  `unsupported_archive`.
+  `unsupported_archive`, `unsafe_svg`, `svg_limit`, `font_limit`.
 - Envelope: `invalid_envelope` (the envelope did not match the schema and was not written).
 - Anything else at the CLI boundary: `invalid_input_or_response`.
 

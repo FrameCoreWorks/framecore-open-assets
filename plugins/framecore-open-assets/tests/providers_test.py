@@ -171,4 +171,77 @@ class Policies(unittest.TestCase):
         self.assertEqual(len(item['variants']),12)
         self.assertIn('9950fe66f993a6660dab9c2651dcbcd899ffd83b',item['variants'][0]['url'])
 
+    # 0.8.0: icons and fonts (owner decision 2026-11-12). Fixtures are trimmed live responses; no network.
+    def test_software_licences_are_accepted_only_with_an_author_and_gpl_nc_stay_blocked(self):
+        self.assertEqual(core.license_policy('MIT'),('MIT','eligible'))
+        self.assertEqual(core.license_policy('Apache-2.0'),('Apache-2.0','eligible'))
+        self.assertEqual(core.license_policy('OFL-1.1'),('OFL-1.1','eligible'))
+        self.assertEqual(core.license_policy('CC-BY-4.0'),('CC BY 4.0','eligible'))
+        self.assertEqual(core.license_policy('CC0-1.0'),('CC0','eligible'))
+        for bad in ('GPL-2.0-only','CC-BY-NC-SA-4.0','UFL-1.0','Unlicense',''):
+            self.assertEqual(core.license_policy(bad)[1],'blocked',bad)
+        ok=core.asset('x','1','t','Author','https://x/',[core.variant('https://x/a')],'','icons',license_id='MIT')
+        self.assertEqual(ok['rights_status'],'eligible')
+        self.assertEqual(core.asset('x','1','t','','https://x/',[],'','icons',license_id='MIT')['rights_status'],'blocked')
+
+    def test_iconify_drops_gpl_nc_and_remix_sets_and_gates_logos(self):
+        c=Mock();c.policy=core.REGISTRY['iconify'];c.json.return_value=self.fixture('iconify-search.json')
+        items=runtime.search_one(c,'home','icons',5)
+        ids=[i['id'] for i in items]
+        for dropped in ('gridicons:home','cbi:home','ri:home-line'):
+            self.assertNotIn(dropped,ids)
+        self.assertEqual(len(set(i['id'].split(':')[0] for i in items)),len(items),'one icon per set first')
+        self.assertTrue(all(i['rights_status'] in ('eligible','review_jurisdiction') for i in items))
+        c.json.return_value={**self.fixture('iconify-search.json'),'icons':['simple-icons:github']}
+        logo=runtime.search_one(c,'github','icons',5)[0]
+        self.assertEqual(logo['rights_status'],'review_jurisdiction')
+        self.assertTrue(any('trademark' in w for w in logo['warnings']))
+        c.json.return_value={**self.fixture('iconify-search.json'),'icons':['twemoji:house']}
+        emoji=runtime.search_one(c,'house','icons',5)[0]
+        self.assertEqual((emoji['license'],emoji['creator']),('CC BY 4.0','Twitter'))
+        self.assertTrue(any('Credit the author' in w for w in emoji['warnings']))
+        self.assertEqual(items[0]['variants'][0]['url'].rsplit('/',2)[-2:],[items[0]['id'].split(':')[0],items[0]['id'].split(':')[1]+'.svg'])
+
+    def test_fontsource_skips_non_open_licences_and_polish_needs_latin_and_latin_ext(self):
+        c=Mock();c.policy=core.REGISTRY['fontsource']
+        c.json.side_effect=[self.fixture('fontsource-list.json'),self.fixture('fontsource-oxanium.json')]
+        items=runtime.search_one(c,'oxanium polish','fonts',3)
+        self.assertEqual([i['id'] for i in items],['oxanium'])
+        labels=[v['label'] for v in items[0]['variants']]
+        self.assertTrue(any(' latin ttf' in l for l in labels) and any(' latin-ext ttf' in l for l in labels))
+        self.assertTrue(all('@5.3.0' in v['url'] for v in items[0]['variants']),'URLs carry the exact npm version')
+        self.assertEqual((items[0]['license'],items[0]['rights_status']),('OFL-1.1','eligible'))
+        c.json.side_effect=[self.fixture('fontsource-list.json')]
+        self.assertEqual(runtime.search_one(c,'ubuntu','fonts',3),[],'Ubuntu Font Licence is not accepted')
+        c.json.side_effect=[self.fixture('fontsource-list.json')]
+        self.assertEqual(runtime.search_one(c,'no latin polish','fonts',3),[],'a font without latin-ext cannot serve Polish')
+
+    def test_svg_decoder_refuses_active_content_and_font_decoder_checks_headers(self):
+        good=b'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z"/></svg>'
+        bad={'script':b'<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>',
+             'handler':b'<svg xmlns="http://www.w3.org/2000/svg" onload="x()"></svg>',
+             'external':b'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="https://evil/x.svg#a"/></svg>',
+             'entity':b'<!DOCTYPE svg [<!ENTITY a "b">]><svg xmlns="http://www.w3.org/2000/svg"/>',
+             'css':b'<svg xmlns="http://www.w3.org/2000/svg"><style>@import url(https://evil/x.css);</style></svg>',
+             'foreign':b'<svg xmlns="http://www.w3.org/2000/svg"><foreignObject><p/></foreignObject></svg>'}
+        with tempfile.TemporaryDirectory() as root:
+            f=Path(root)/'a.svg';f.write_bytes(good)
+            self.assertEqual(core.decode(f)['kind'],'vector')
+            for name,body in bad.items():
+                f.write_bytes(body)
+                with self.assertRaises(core.Refused,msg=name):core.decode(f)
+            f.write_bytes(b'wOF2'+b'\x00\x01\x00\x00'+(99).to_bytes(4,'big')+(3).to_bytes(2,'big')+b'\x00'*20)
+            with self.assertRaises(core.Refused):core.decode(f)
+            f.write_bytes(b'wOF2'+b'\x00\x01\x00\x00'+(24).to_bytes(4,'big')+(3).to_bytes(2,'big')+b'\x00'*10)
+            self.assertEqual(core.decode(f)['kind'],'font')
+
+    def test_icons_and_fonts_cannot_be_delivered_as_other_media(self):
+        with tempfile.TemporaryDirectory() as root:
+            c=core.Client('iconify',Path(root)/'state','claude_code','test')
+            c.get=Mock(return_value=(b'x',{'content-type':'image/svg+xml'}))
+            item=core.asset('iconify','mdi:home','t','Author','https://x/',[core.variant('https://api.iconify.design/mdi/home.svg')],'','icons',license_id='MIT')
+            with patch('core.decode',return_value={'kind':'font'}),self.assertRaises(core.Refused) as error:
+                core.download(c,item,Path(root)/'home.svg')
+            self.assertEqual(error.exception.kind,'wrong_media_type')
+
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,68 @@
+{
+ "id": "oxanium",
+ "family": "Oxanium",
+ "subsets": [
+  "latin",
+  "latin-ext"
+ ],
+ "weights": [
+  200,
+  300,
+  400,
+  500,
+  600,
+  700,
+  800
+ ],
+ "styles": [
+  "normal"
+ ],
+ "defSubset": "latin",
+ "variable": true,
+ "lastModified": "2025-09-10",
+ "category": "display",
+ "license": "OFL-1.1",
+ "type": "google",
+ "version": "v21",
+ "source": "https://github.com/google/fonts",
+ "npmVersion": "5.3.0",
+ "unicodeRange": {},
+ "variants": {
+  "400": {
+   "normal": {
+    "latin-ext": {
+     "url": {
+      "woff2": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-ext-400-normal.woff2",
+      "woff": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-ext-400-normal.woff",
+      "ttf": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-ext-400-normal.ttf"
+     }
+    },
+    "latin": {
+     "url": {
+      "woff2": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-400-normal.woff2",
+      "woff": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-400-normal.woff",
+      "ttf": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-400-normal.ttf"
+     }
+    }
+   }
+  },
+  "700": {
+   "normal": {
+    "latin-ext": {
+     "url": {
+      "woff2": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-ext-700-normal.woff2",
+      "woff": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-ext-700-normal.woff",
+      "ttf": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-ext-700-normal.ttf"
+     }
+    },
+    "latin": {
+     "url": {
+      "woff2": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-700-normal.woff2",
+      "woff": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-700-normal.woff",
+      "ttf": "https://cdn.jsdelivr.net/fontsource/fonts/oxanium@5.3.0/latin-700-normal.ttf"
+     }
+    }
+   }
+  }
+ }
+}

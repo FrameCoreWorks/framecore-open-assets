@@ -370,5 +370,40 @@
     "reference": "skills/open-assets/references/providers/uisfx.md",
     "smoke_query": "success",
     "smoke_category": "sfx"
+  },
+  "iconify": {
+    "name": "Iconify (open icon sets)",
+    "policy": "documented",
+    "reason": "",
+    "module": "iconify",
+    "categories": [
+      "icons"
+    ],
+    "allowed_domains": [
+      "api.iconify.design"
+    ],
+    "min_interval_seconds": 1,
+    "sources_read": "2026-11-12",
+    "reference": "skills/open-assets/references/providers/iconify.md",
+    "smoke_query": "home",
+    "smoke_category": "icons"
+  },
+  "fontsource": {
+    "name": "Fontsource (open fonts)",
+    "policy": "documented",
+    "reason": "",
+    "module": "fontsource",
+    "categories": [
+      "fonts"
+    ],
+    "allowed_domains": [
+      "api.fontsource.org",
+      "cdn.jsdelivr.net"
+    ],
+    "min_interval_seconds": 1,
+    "sources_read": "2026-11-12",
+    "reference": "skills/open-assets/references/providers/fontsource.md",
+    "smoke_query": "oxanium polish",
+    "smoke_category": "fonts"
   }
 }

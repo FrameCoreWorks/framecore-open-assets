@@ -281,7 +281,7 @@ def main(argv=None):
         p.add_argument('--out', required=True)
         if name == 'search':
             p.add_argument('--provider', choices=[*REGISTRY, 'all'], required=True)
-            p.add_argument('--category', choices=['photos', 'graphics', 'audio', 'music', 'sfx', 'video'], required=True)
+            p.add_argument('--category', choices=['photos', 'graphics', 'audio', 'music', 'sfx', 'video', 'icons', 'fonts'], required=True)
             p.add_argument('--query', required=True)
             p.add_argument('--limit', type=int, default=3)
             p.add_argument('--fresh', action='store_true')

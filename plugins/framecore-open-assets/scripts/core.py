@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 import zipfile
 
-VERSION = '0.7.0'
+VERSION = '0.8.0'
 ROOT = Path(__file__).resolve().parents[1]
 CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/'
 PDM = 'https://creativecommons.org/publicdomain/mark/1.0/'
@@ -243,7 +243,22 @@ class Client:
         return data
 
 
+# Software-style licences (0.8.0, owner decision 2026-11-12) for icon and font sets. They allow commercial use but
+# ask that the copyright notice and licence travel with the files, so an author is required (see `asset`).
+PERMISSIVE = {'mit': 'MIT', 'isc': 'ISC', 'apache-2.0': 'Apache-2.0', 'bsd-2-clause': 'BSD-2-Clause',
+              'bsd-3-clause': 'BSD-3-Clause', 'ofl-1.1': 'OFL-1.1'}
+SPDX_CC = re.compile(r'(?i)cc-(by|by-sa)-(1\.0|2\.0|2\.5|3\.0|4\.0)')
+
+
 def license_policy(value):
+    token = str(value).strip().lower()
+    if token in PERMISSIVE:
+        return PERMISSIVE[token], 'eligible'
+    if token == 'cc0-1.0':
+        return 'CC0', 'eligible'
+    m = SPDX_CC.fullmatch(str(value).strip())
+    if m:
+        value = f'https://creativecommons.org/licenses/{m[1].lower()}/{m[2]}/'
     p = urllib.parse.urlsplit(str(value).replace('http://', 'https://', 1))
     path = re.sub(r'/(?:deed|legalcode)(?:\.[a-zA-Z_-]+)?/?$', '', p.path).rstrip('/')
     if p.scheme == 'https' and p.hostname == 'creativecommons.org' and not p.username:
@@ -257,11 +272,12 @@ def license_policy(value):
     return clean(value) or 'Unknown', 'blocked'
 
 
-def asset(provider, id, title, creator, source, variants, license_url, category, warnings=None, review=None):
-    license_name, status = license_policy(license_url)
+def asset(provider, id, title, creator, source, variants, license_url, category, warnings=None, review=None,
+          license_id=None):
+    license_name, status = license_policy(license_id or license_url)
     if review:
         status = review
-    if license_name.startswith('CC BY') and not clean(creator):
+    if (license_name.startswith('CC BY') or license_name in PERMISSIVE.values()) and not clean(creator):
         status = 'blocked'
     return {'schema_version': 1, 'provider': provider, 'id': str(id), 'title': clean(title),
             'creator': clean(creator), 'source_page': source, 'license': license_name,
@@ -273,6 +289,67 @@ def asset(provider, id, title, creator, source, variants, license_url, category,
 
 def variant(url, label='', **extra):
     return {'url': https(url), 'label': label, **extra}
+
+
+SVG_DANGEROUS_TAGS = {'script', 'foreignobject', 'iframe', 'object', 'embed', 'audio', 'video', 'canvas', 'handler', 'listener'}
+MAX_SVG = 2 * 1024 * 1024
+
+
+def decode_svg(path):
+    """Accept only static, self-contained SVG: no scripts, event handlers, external references or entities."""
+    import xml.etree.ElementTree as ET
+    raw = path.read_bytes()
+    if len(raw) > MAX_SVG:
+        raise Refused('svg_limit', 'SVG exceeds 2 MiB')
+    text = raw.decode('utf-8', 'replace')
+    low = text.lower()
+    if '<!doctype' in low or '<!entity' in low or 'xml-stylesheet' in low:
+        raise Refused('unsafe_svg', 'SVG declares a DOCTYPE, entity or stylesheet')
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError as exc:
+        raise Refused('not_media', 'SVG is not well-formed XML') from exc
+    if root.tag.rsplit('}', 1)[-1].lower() != 'svg':
+        raise Refused('not_media', 'Root element is not svg')
+    for el in root.iter():
+        tag = str(el.tag).rsplit('}', 1)[-1].lower()
+        if tag in SVG_DANGEROUS_TAGS:
+            raise Refused('unsafe_svg', 'SVG contains an active element: ' + tag)
+        if tag == 'style' and re.search(r'@import|url\(\s*[\'"]?(?!#)', el.text or '', re.I):
+            raise Refused('unsafe_svg', 'SVG style loads an external resource')
+        for key, val in el.attrib.items():
+            name = key.rsplit('}', 1)[-1].lower()
+            v = str(val).strip().lower()
+            if name.startswith('on') or 'javascript:' in v or 'data:text/html' in v:
+                raise Refused('unsafe_svg', 'SVG contains an event handler or script URL')
+            if name == 'href' and not v.startswith('#'):
+                raise Refused('unsafe_svg', 'SVG references an external resource')
+            if name == 'style' and re.search(r'@import|url\(\s*[\'"]?(?!#)', v):
+                raise Refused('unsafe_svg', 'SVG style loads an external resource')
+    return {'kind': 'vector', 'format': 'SVG', 'viewBox': root.attrib.get('viewBox'), 'elements': sum(1 for _ in root.iter()),
+            'active_content': False}
+
+
+def decode_font(path, prefix):
+    size = path.stat().st_size
+    kind = prefix[:4]
+    if size > 16 * 1024 * 1024:
+        raise Refused('font_limit', 'Font file exceeds 16 MiB')
+    if kind in (b'wOF2', b'wOFF'):
+        if int.from_bytes(prefix[8:12], 'big') != size or int.from_bytes(prefix[12:14], 'big') < 1:
+            raise Refused('not_media', 'WOFF header length or table count is inconsistent')
+        return {'kind': 'font', 'format': kind.decode(), 'tables': int.from_bytes(prefix[12:14], 'big'),
+                'loaded_by_renderer': False}
+    try:
+        from PIL import ImageFont
+        face = ImageFont.truetype(str(path), 24)
+        family, style = face.getname()
+    except ImportError:
+        raise Refused('decoder_missing', 'Pillow is required to verify fonts')
+    except OSError as exc:
+        raise Refused('not_media', 'FreeType could not load the font') from exc
+    return {'kind': 'font', 'format': 'OpenType' if kind == b'OTTO' else 'TrueType', 'family': family, 'style': style,
+            'loaded_by_renderer': True}
 
 
 def decode(path):
@@ -315,6 +392,11 @@ def decode(path):
         return {'kind': 'image_package', 'decoded_images': count, 'extracted': False,
                 'crc_verified': True, 'unverified_project_members': unverified,
                 'warning': 'Only raster images decoded; project files are not executed or approved for execution.'}
+    head = path.read_bytes()[:512].lstrip(b'\xef\xbb\xbf \t\r\n').lower()
+    if head.startswith((b'<svg', b'<?xml')):
+        return decode_svg(path)
+    if prefix[:4] in (b'wOF2', b'wOFF', b'\x00\x01\x00\x00', b'OTTO', b'true', b'ttcf'):
+        return decode_font(path, prefix)
     if not shutil.which('ffprobe') or not shutil.which('ffmpeg'):
         raise Refused('decoder_missing', 'FFprobe and FFmpeg are required to verify audio/video')
     if not (prefix.startswith((b'ID3', b'OggS', b'fLaC', b'\x1aE\xdf\xa3'))
@@ -394,6 +476,10 @@ def download(client, item, target, choice=0, accept_sa=False, review_note=None, 
             raise Refused('wrong_media_type', 'Expected an image or texture package')
         if item['category'] == 'photos' and measured['kind'] != 'image':
             raise Refused('wrong_media_type', 'Expected a single raster image')
+        if item['category'] == 'icons' and measured['kind'] != 'vector':
+            raise Refused('wrong_media_type', 'Expected a static SVG icon')
+        if item['category'] == 'fonts' and measured['kind'] != 'font':
+            raise Refused('wrong_media_type', 'Expected a font file')
         if item['category'] == 'video' and measured['kind'] != 'video':
             raise Refused('wrong_media_type', 'Expected video, received a different medium')
         record = {**item, 'selected_variant': v, 'saved_path': str(target.resolve()),

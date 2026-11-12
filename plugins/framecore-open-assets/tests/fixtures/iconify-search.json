@@ -1,0 +1,120 @@
+{
+ "icons": [
+  "gridicons:home",
+  "cbi:home",
+  "ri:home-line",
+  "simple-icons:github",
+  "twemoji:house",
+  "mdi:home",
+  "mdi:home-outline",
+  "line-md:home",
+  "flagpack:pl"
+ ],
+ "total": 9,
+ "collections": {
+  "mdi": {
+   "name": "Material Design Icons",
+   "author": {
+    "name": "Pictogrammers",
+    "url": "https://github.com/Templarian/MaterialDesign"
+   },
+   "license": {
+    "title": "Apache 2.0",
+    "spdx": "Apache-2.0",
+    "url": "https://github.com/Templarian/MaterialDesign/blob/master/LICENSE"
+   },
+   "category": "Material"
+  },
+  "line-md": {
+   "name": "Material Line Icons",
+   "author": {
+    "name": "Vjacheslav Trushkin",
+    "url": "https://github.com/cyberalien/line-md"
+   },
+   "license": {
+    "title": "MIT",
+    "spdx": "MIT",
+    "url": "https://github.com/cyberalien/line-md/blob/main/license.txt"
+   },
+   "category": "Material"
+  },
+  "ri": {
+   "name": "Remix Icon",
+   "author": {
+    "name": "Remix Design",
+    "url": "https://github.com/cyberalien/RemixIcon"
+   },
+   "license": {
+    "title": "Apache 2.0",
+    "spdx": "Apache-2.0",
+    "url": "https://github.com/cyberalien/RemixIcon/blob/master/License"
+   },
+   "category": "UI 24px"
+  },
+  "gridicons": {
+   "name": "Gridicons",
+   "author": {
+    "name": "Automattic",
+    "url": "https://github.com/Automattic/gridicons"
+   },
+   "license": {
+    "title": "GPL 2.0",
+    "spdx": "GPL-2.0-only",
+    "url": "https://github.com/Automattic/gridicons/blob/trunk/LICENSE.md"
+   },
+   "category": "UI 24px"
+  },
+  "simple-icons": {
+   "name": "Simple Icons",
+   "author": {
+    "name": "Simple Icons Collaborators",
+    "url": "https://github.com/simple-icons/simple-icons"
+   },
+   "license": {
+    "title": "CC0 1.0",
+    "spdx": "CC0-1.0",
+    "url": "https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md"
+   },
+   "category": "Logos"
+  },
+  "cbi": {
+   "name": "Custom Brand Icons",
+   "author": {
+    "name": "Emanuele & rchiileea",
+    "url": "https://github.com/elax46/custom-brand-icons"
+   },
+   "license": {
+    "title": "CC BY-NC-SA 4.0",
+    "spdx": "CC-BY-NC-SA-4.0",
+    "url": "https://github.com/elax46/custom-brand-icons/blob/main/LICENSE"
+   },
+   "category": "Logos"
+  },
+  "twemoji": {
+   "name": "Twitter Emoji",
+   "author": {
+    "name": "Twitter",
+    "url": "https://github.com/jdecked/twemoji"
+   },
+   "license": {
+    "title": "CC BY 4.0",
+    "spdx": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+   },
+   "category": "Emoji"
+  },
+  "flagpack": {
+   "name": "Flagpack",
+   "author": {
+    "name": "Yummygum",
+    "url": "https://github.com/Yummygum/flagpack-core"
+   },
+   "license": {
+    "title": "MIT",
+    "spdx": "MIT",
+    "url": "https://github.com/Yummygum/flagpack-core/blob/main/LICENSE"
+   },
+   "category": "Flags"
+  }
+ }
+}

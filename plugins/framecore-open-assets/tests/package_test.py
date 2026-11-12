@@ -12,7 +12,7 @@ class Package(unittest.TestCase):
         manifests=[json.loads((ROOT/p).read_text()) for p in
                    ('plugin.json','.claude-plugin/plugin.json','.codex-plugin/plugin.json')]
         self.assertEqual({m['name'] for m in manifests},{'framecore-open-assets'})
-        self.assertEqual({m['version'] for m in manifests},{'0.7.0'})
+        self.assertEqual({m['version'] for m in manifests},{'0.8.0'})
         self.assertEqual({m['license'] for m in manifests},{'Apache-2.0'})
         self.assertIn('Apache License',(ROOT/'LICENSE').read_text())
         root=manifests[0]
@@ -32,8 +32,8 @@ class Package(unittest.TestCase):
 
     def test_every_packaged_provider_is_qualified_and_implemented(self):
         data=json.loads((ROOT/'providers.json').read_text())
-        self.assertEqual(len(data),20)
-        self.assertEqual(sum(len(r['categories']) for r in data.values()),34)
+        self.assertEqual(len(data),22)
+        self.assertEqual(sum(len(r['categories']) for r in data.values()),36)
         self.assertEqual({p.stem for p in (ROOT/'scripts/providers').glob('*.py') if p.stem != '__init__'},set(data))
         self.assertEqual({p.stem for p in (ROOT/'skills/open-assets/references/providers').glob('*.md')},set(data))
         for id,r in data.items():
@@ -48,7 +48,7 @@ class Package(unittest.TestCase):
         market=json.loads((ROOT.parents[1]/'.claude-plugin/marketplace.json').read_text())
         entry=next(x for x in market['plugins'] if x['name']=='framecore-open-assets')
         self.assertEqual(entry['source'],'./plugins/framecore-open-assets')
-        self.assertEqual(entry['version'],'0.7.0')
+        self.assertEqual(entry['version'],'0.8.0')
 
 
 if __name__=='__main__':unittest.main()

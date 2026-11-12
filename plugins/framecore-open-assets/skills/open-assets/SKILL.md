@@ -60,7 +60,7 @@ Example (replace host/model with actual values):
 python3 <runtime> search --host chatgpt_work --model <actual-model> --provider met --category graphics --query sunflowers --limit 3 --out /project/assets/met-results.json
 ```
 
-Categories: `photos`, `graphics`, `audio`, `music`, `sfx`, `video`. Query terms do not prove semantic
+Categories: `photos`, `graphics`, `audio`, `music`, `sfx`, `video`, `icons`, `fonts`. Query terms do not prove semantic
 fit: an artwork reproduction is not lifestyle stock; narrated literature is not music; a texture is
 not an illustration. Music is Commons, Incompetech (one composer, CC BY 4.0 with required credit), the Internet Archive (whitelisted collections; the licence label is declared by the uploader), the National Jukebox (before 1923, US only, review gate) and Oculus/UI SFX sets; field recordings come from the Internet Archive (radio aporee) and interface sounds from Meta Open Sound and UI SFX. Whooshes, risers and contemporary stock footage remain gaps. Explain those gaps.
 

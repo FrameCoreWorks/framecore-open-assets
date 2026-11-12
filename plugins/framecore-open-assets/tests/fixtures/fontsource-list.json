@@ -1,0 +1,94 @@
+[
+ {
+  "id": "oxanium",
+  "family": "Oxanium",
+  "subsets": [
+   "latin",
+   "latin-ext"
+  ],
+  "weights": [
+   200,
+   300,
+   400,
+   500,
+   600,
+   700,
+   800
+  ],
+  "styles": [
+   "normal"
+  ],
+  "defSubset": "latin",
+  "variable": true,
+  "lastModified": "2025-09-10",
+  "category": "display",
+  "license": "OFL-1.1",
+  "type": "google"
+ },
+ {
+  "id": "ubuntu",
+  "family": "Ubuntu",
+  "subsets": [
+   "cyrillic",
+   "cyrillic-ext",
+   "greek",
+   "greek-ext",
+   "latin",
+   "latin-ext"
+  ],
+  "weights": [
+   300,
+   400,
+   500,
+   700
+  ],
+  "styles": [
+   "italic",
+   "normal"
+  ],
+  "defSubset": "latin",
+  "variable": false,
+  "lastModified": "2025-09-02",
+  "category": "sans-serif",
+  "license": "UFL-1.0",
+  "type": "google"
+ },
+ {
+  "id": "vt323",
+  "family": "VT323",
+  "subsets": [
+   "latin",
+   "latin-ext",
+   "vietnamese"
+  ],
+  "weights": [
+   400
+  ],
+  "styles": [
+   "normal"
+  ],
+  "defSubset": "latin",
+  "variable": false,
+  "lastModified": "2025-09-16",
+  "category": "monospace",
+  "license": "OFL-1.1",
+  "type": "google"
+ },
+ {
+  "id": "nolatinext",
+  "family": "No Latin Ext",
+  "subsets": [
+   "latin"
+  ],
+  "weights": [
+   400
+  ],
+  "styles": [
+   "normal"
+  ],
+  "defSubset": "latin",
+  "category": "display",
+  "license": "OFL-1.1",
+  "type": "google"
+ }
+]

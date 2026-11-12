@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.8.0, 2026-11-12
+
+Trigger: owner decision 2026-11-12 ("Tak, dodaj Open Assets, Iconify i Font Source") on the two candidates the 0.7.0 research left for his decision.
+
+- New categories `icons` and `fonts`. New providers `iconify` (icons from open-licensed sets) and `fontsource` (OFL, Apache and MIT web fonts, pinned CDN files, Polish needs `latin` and `latin-ext`). 22 providers, 36 provider/category paths.
+- Licence policy: SPDX identifiers are now understood (MIT, ISC, Apache-2.0, BSD, OFL-1.1, CC0, CC BY, CC BY-SA); permissive and CC BY licences require a named creator. GPL, NC, the Ubuntu Font Licence, Remix Icon and sets without an author stay blocked. Logo sets are `review_jurisdiction` (trademark).
+- Safety: new SVG decoder (static, self-contained SVG only) and font decoder (WOFF/WOFF2 header, FreeType load); `download` checks that icons are vector and fonts are fonts. The shared task contract is unchanged (`media_kind` is a free string).
+- Allowlist: `api.iconify.design`, `api.fontsource.org`, `cdn.jsdelivr.net` (`docs/CLOUD_NETWORK.md`).
+- Evidence: live search and download in a Claude Code cloud container; five new regression tests with trimmed live fixtures. ChatGPT Work: NOT_RUN.
+
 ## 0.7.0, 2026-11-12
 
 Trigger: owner request 2026-11-12 to add the new sources from the "Nowe źródła dla Open Assets" research (about 270 sources checked; report in the project files) to the plugin and publish.

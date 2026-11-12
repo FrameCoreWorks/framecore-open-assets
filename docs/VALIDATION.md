@@ -1,5 +1,9 @@
 # Validation
 
+## 0.8.0 source (2026-11-12)
+
+`iconify` (icons) and `fontsource` (fonts). Live in a Claude Code cloud container (open network): "home" and "github" icon searches returned eligible records and one SVG was downloaded and decoded as vector; "oxanium polish" returned an OFL-1.1 font with 8 variants, the TTF decoded through FreeType and the WOFF2 header validated. Hosted ChatGPT Work update, Work search/download, Codex and Claude apps: NOT_RUN. `python3 tools/check.py`: see the commit.
+
 ## 0.7.0 source (2026-11-12)
 
 Five new providers from the 2026-11-12 research: `archive`, `jukebox`, `nasasvs`, `metasound`, `uisfx`. Live in a Claude Code

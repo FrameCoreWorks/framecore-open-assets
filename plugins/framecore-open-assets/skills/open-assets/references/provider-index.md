@@ -25,7 +25,7 @@ Only qualified providers with an observed live search/download/decode are packag
 | Meta Open Sound: Oculus Audio Pack 1 | sfx | [metasound](providers/metasound.md) |
 | UI SFX (CC0 interface sounds) | sfx | [uisfx](providers/uisfx.md) |
 
-Twenty providers, thirty-four confirmed media paths. LoC is limited to dedicated Gottlieb photographs; Rijksmuseum to explicit PDM/CC0 image records. NASA supplies photos/video. Incompetech adds one composer's CC BY catalogue with BPM and mood; broader music and recorded SFX remain gaps. 0.7.0 adds the Internet Archive (only reviewed collections; uploader-declared licences), the National Jukebox (US-only, review gate), NASA SVS (review gate), Meta Open Sound (CC BY 4.0, fixed credit) and UI SFX (CC0).
+Twenty-two providers, thirty-six confirmed media paths. LoC is limited to dedicated Gottlieb photographs; Rijksmuseum to explicit PDM/CC0 image records. NASA supplies photos/video. Incompetech adds one composer's CC BY catalogue with BPM and mood; broader music and recorded SFX remain gaps. 0.7.0 adds the Internet Archive (only reviewed collections; uploader-declared licences), the National Jukebox (US-only, review gate), NASA SVS (review gate), Meta Open Sound (CC BY 4.0, fixed credit) and UI SFX (CC0). 0.8.0 adds Iconify (category icons) and Fontsource (category fonts).
 
 Work search/download evidence is dated 2026-10-28; installed-client behavior in Codex/Claude remains NOT_RUN. Every new host/category still verifies its first actual file. A successful sample cannot guarantee future availability or every catalogue item.
 
