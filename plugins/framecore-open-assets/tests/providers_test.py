@@ -97,4 +97,78 @@ class Policies(unittest.TestCase):
         with self.assertRaises(core.Refused):
             runtime.search_one(c,'piano','sfx',1)
 
+    # 0.7.0 providers (research 2026-11-12). Fixtures are trimmed live responses; no network.
+    @staticmethod
+    def fixture(name):
+        return json.loads((Path(__file__).parent/'fixtures'/name).read_text())
+
+    def test_archive_returns_only_open_licence_whitelisted_items_and_small_mp3s(self):
+        c=Mock();c.policy=core.REGISTRY['archive']
+        c.json.side_effect=[self.fixture('archive-search.json'),self.fixture('archive-metadata.json'),
+                            self.fixture('archive-metadata-nc.json')]
+        items=runtime.search_one(c,'goldberg','music',5)
+        self.assertEqual([i['id'] for i in items],['OpenGoldbergVariations'],'a BY-NC item is dropped even if the search returned it')
+        item=items[0]
+        self.assertEqual((item['license'],item['rights_status']),('CC0','eligible'))
+        self.assertTrue(all(v['url'].startswith('https://archive.org/download/OpenGoldbergVariations/') for v in item['variants']))
+        self.assertTrue(all(v['label'].endswith('.mp3') and v['bytes']<=core.MAX_FILE for v in item['variants']))
+        query=c.json.call_args_list[0].args[0]
+        self.assertIn('collection%3A%28musopen+OR+netlabels%29',query,'music is bound to reviewed collections')
+        self.assertIn('licenseurl',query)
+        self.assertTrue(any('declared by the uploader' in w for w in item['warnings']))
+        c.json.side_effect=[{'response':{'docs':[]}}]
+        runtime.search_one(c,'rain','sfx',2)
+        self.assertIn('radio-aporee-maps',c.json.call_args.args[0])
+        c.json.side_effect=[{'response':{'docs':[]}}]
+        runtime.search_one(c,'x','video',2)
+        self.assertIn('mediatype%3Amovies',c.json.call_args.args[0])
+        with self.assertRaises(core.Refused):
+            runtime.search_one(c,'x','photos',1)
+
+    def test_jukebox_keeps_only_recordings_before_1923_behind_the_review_gate(self):
+        c=Mock();c.policy=core.REGISTRY['jukebox'];c.json.return_value=self.fixture('jukebox-search.json')
+        items=runtime.search_one(c,'waltz','music',5)
+        self.assertEqual(len(items),2,'the 1931 row is skipped')
+        self.assertTrue(all(i['rights_status']=='review_jurisdiction' for i in items))
+        self.assertTrue(all(i['variants'][0]['url'].startswith('https://tile.loc.gov/') for i in items))
+        self.assertTrue(any('composition' in w for w in items[0]['warnings']))
+        with tempfile.TemporaryDirectory() as root:
+            client=core.Client('jukebox',Path(root)/'state','claude_code','test')
+            with self.assertRaises(core.Refused) as error:
+                core.download(client,items[0],Path(root)/'a.mp3')
+            self.assertEqual(error.exception.kind,'rights_blocked','a review note is required before download')
+
+    def test_nasasvs_uses_description_sizes_and_skips_oversized_movies(self):
+        c=Mock();c.policy=core.REGISTRY['nasasvs']
+        c.json.side_effect=[self.fixture('nasasvs-search.json'),self.fixture('nasasvs-page.json')]
+        items=runtime.search_one(c,'hurricane','photos',3)
+        self.assertEqual(len(items),1)
+        self.assertEqual(items[0]['rights_status'],'review_nasa')
+        self.assertTrue(items[0]['variants'][0]['url'].startswith('https://svs.gsfc.nasa.gov/'))
+        self.assertNotIn('bytes',items[0]['variants'][0],'sizes in the description are approximate')
+        c.json.side_effect=[self.fixture('nasasvs-search.json'),self.fixture('nasasvs-page.json')]
+        self.assertEqual(runtime.search_one(c,'hurricane','video',3),[],'the 185 MB and 77 MB movies exceed the 32 MiB cap')
+
+    def test_metasound_matches_ucs_names_and_carries_the_required_credit(self):
+        c=Mock();c.policy=core.REGISTRY['metasound'];c.json.return_value=self.fixture('metasound-manifest.json')
+        items=runtime.search_one(c,'ui error','sfx',5)
+        self.assertTrue(items and all(i['id'].startswith('UIAlert') for i in items))
+        self.assertEqual((items[0]['license'],items[0]['rights_status']),('CC BY 4.0','eligible'))
+        self.assertEqual(items[0]['creator'],'Oculus VR, LLC')
+        self.assertTrue(items[0]['variants'][0]['url'].endswith('.ogg'))
+        self.assertIn('251c0be57d5d1b3242b91f53e0cde62ab1cb42d9',items[0]['variants'][0]['url'],'URLs are pinned to the reviewed commit')
+        self.assertTrue(any('Credit required' in w and 'CC BY 4.0' in w for w in items[0]['warnings']))
+        self.assertEqual(runtime.search_one(c,'dragon','sfx',5),[])
+
+    def test_uisfx_reads_cues_from_the_taxonomy_and_orders_packs_by_the_query(self):
+        c=Mock();c.policy=core.REGISTRY['uisfx']
+        c.get.return_value=((Path(__file__).parent/'fixtures'/'uisfx-taxonomy.md').read_bytes(),{})
+        items=runtime.search_one(c,'glass toggle','sfx',5)
+        self.assertEqual({i['id'] for i in items}>={'toggle-on','toggle-off'},True)
+        item=items[0]
+        self.assertEqual((item['license'],item['rights_status']),('CC0','eligible'))
+        self.assertTrue(item['variants'][0]['label'].startswith('glass/'))
+        self.assertEqual(len(item['variants']),12)
+        self.assertIn('9950fe66f993a6660dab9c2651dcbcd899ffd83b',item['variants'][0]['url'])
+
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,13 @@
+{
+ "response": {
+  "numFound": 2,
+  "docs": [
+   {
+    "identifier": "OpenGoldbergVariations"
+   },
+   {
+    "identifier": "hifidelity-fake-cc0"
+   }
+  ]
+ }
+}

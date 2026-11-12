@@ -279,5 +279,96 @@
     "reference": "skills/open-assets/references/providers/incompetech.md",
     "smoke_query": "calm piano",
     "smoke_category": "music"
+  },
+  "archive": {
+    "name": "Internet Archive (whitelisted collections)",
+    "policy": "documented",
+    "reason": "",
+    "module": "archive",
+    "categories": [
+      "music",
+      "sfx",
+      "audio",
+      "video"
+    ],
+    "allowed_domains": [
+      "archive.org",
+      ".archive.org"
+    ],
+    "min_interval_seconds": 1,
+    "sources_read": "2026-11-12",
+    "reference": "skills/open-assets/references/providers/archive.md",
+    "smoke_query": "piano",
+    "smoke_category": "music"
+  },
+  "jukebox": {
+    "name": "Library of Congress: National Jukebox (before 1923)",
+    "policy": "documented",
+    "reason": "",
+    "module": "jukebox",
+    "categories": [
+      "music"
+    ],
+    "allowed_domains": [
+      "www.loc.gov",
+      "tile.loc.gov"
+    ],
+    "min_interval_seconds": 6.1,
+    "sources_read": "2026-11-12",
+    "reference": "skills/open-assets/references/providers/jukebox.md",
+    "smoke_query": "waltz",
+    "smoke_category": "music"
+  },
+  "nasasvs": {
+    "name": "NASA Scientific Visualization Studio",
+    "policy": "documented",
+    "reason": "",
+    "module": "nasasvs",
+    "categories": [
+      "photos",
+      "video"
+    ],
+    "allowed_domains": [
+      "svs.gsfc.nasa.gov"
+    ],
+    "min_interval_seconds": 1,
+    "sources_read": "2026-11-12",
+    "reference": "skills/open-assets/references/providers/nasasvs.md",
+    "smoke_query": "hurricane",
+    "smoke_category": "photos"
+  },
+  "metasound": {
+    "name": "Meta Open Sound: Oculus Audio Pack 1",
+    "policy": "documented",
+    "reason": "",
+    "module": "metasound",
+    "categories": [
+      "sfx"
+    ],
+    "allowed_domains": [
+      "raw.githubusercontent.com"
+    ],
+    "min_interval_seconds": 1,
+    "sources_read": "2026-11-12",
+    "reference": "skills/open-assets/references/providers/metasound.md",
+    "smoke_query": "ui error",
+    "smoke_category": "sfx"
+  },
+  "uisfx": {
+    "name": "UI SFX (CC0 interface sounds)",
+    "policy": "documented",
+    "reason": "",
+    "module": "uisfx",
+    "categories": [
+      "sfx"
+    ],
+    "allowed_domains": [
+      "raw.githubusercontent.com"
+    ],
+    "min_interval_seconds": 1,
+    "sources_read": "2026-11-12",
+    "reference": "skills/open-assets/references/providers/uisfx.md",
+    "smoke_query": "success",
+    "smoke_category": "sfx"
   }
 }

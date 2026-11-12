@@ -1,0 +1,15 @@
+{
+ "metadata": {
+  "identifier": "hifidelity-fake-cc0",
+  "title": "Item with a licence outside the policy",
+  "creator": "Someone",
+  "licenseurl": "http://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "files": [
+  {
+   "name": "a.mp3",
+   "format": "VBR MP3",
+   "size": "1000"
+  }
+ ]
+}

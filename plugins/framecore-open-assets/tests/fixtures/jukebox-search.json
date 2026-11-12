@@ -1,0 +1,84 @@
+{
+ "results": [
+  {
+   "id": "http://www.loc.gov/item/jukebox-730220/",
+   "title": "Waltzes",
+   "date": "1908-01-31",
+   "original_format": [
+    "sound recording"
+   ],
+   "resources": [
+    {
+     "files": 1,
+     "media": "https://tile.loc.gov/streaming-services/iiif/service:mbrsrs:mbrsjukebox:ucsb_col_3763_01_t3763_01:ucsb_col_3763_01_t3763_01/full/full/0/full/default.mp3",
+     "url": "https://www.loc.gov/resource/jukebox-730220.0"
+    },
+    {
+     "files": 1,
+     "image": "https://tile.loc.gov/image-services/iiif/service:mbrsrs:mbrsjukebox:ucsb_col_3763_01_t3763_01:ucsb_col_3763_01_t3763_01/full/pct:100/0/default.jpg",
+     "mimetype": "image/jpeg",
+     "url": "https://www.loc.gov/resource/jukebox-730220.1"
+    }
+   ],
+   "contributor": [
+    "prince's orchestra",
+    "straus, oscar"
+   ],
+   "access_restricted": false
+  },
+  {
+   "id": "http://www.loc.gov/item/jukebox-669199/",
+   "title": "Waltzing the blues",
+   "date": "1922-10-11",
+   "original_format": [
+    "sound recording"
+   ],
+   "resources": [
+    {
+     "files": 1,
+     "media": "https://tile.loc.gov/streaming-services/iiif/service:mbrsrs:mbrsjukebox:ucsb_col_a3740_01_80603_02:ucsb_col_a3740_01_80603_02/full/full/0/full/default.mp3",
+     "url": "https://www.loc.gov/resource/jukebox-669199.0"
+    },
+    {
+     "files": 1,
+     "image": "https://tile.loc.gov/image-services/iiif/service:mbrsrs:mbrsjukebox:ucsb_col_a3740_01_80603_02:ucsb_col_a3740_01_80603_02/full/pct:100/0/default.jpg",
+     "mimetype": "image/jpeg",
+     "url": "https://www.loc.gov/resource/jukebox-669199.1"
+    }
+   ],
+   "contributor": [
+    "specht, paul",
+    "paul specht orchestra",
+    "gaskill, clarence",
+    "paul specht hotel astor orchestra [i.e., paul specht orchestra]"
+   ],
+   "access_restricted": false
+  },
+  {
+   "id": "http://www.loc.gov/item/jukebox-late/",
+   "title": "Recorded later",
+   "date": "1931-05-01",
+   "original_format": [
+    "sound recording"
+   ],
+   "resources": [
+    {
+     "files": 1,
+     "media": "https://tile.loc.gov/streaming-services/iiif/service:mbrsrs:mbrsjukebox:ucsb_col_3763_01_t3763_01:ucsb_col_3763_01_t3763_01/full/full/0/full/default.mp3",
+     "url": "https://www.loc.gov/resource/jukebox-730220.0"
+    },
+    {
+     "files": 1,
+     "image": "https://tile.loc.gov/image-services/iiif/service:mbrsrs:mbrsjukebox:ucsb_col_3763_01_t3763_01:ucsb_col_3763_01_t3763_01/full/pct:100/0/default.jpg",
+     "mimetype": "image/jpeg",
+     "url": "https://www.loc.gov/resource/jukebox-730220.1"
+    }
+   ],
+   "contributor": [
+    "prince's orchestra",
+    "straus, oscar"
+   ],
+   "access_restricted": false
+  }
+ ]
+}

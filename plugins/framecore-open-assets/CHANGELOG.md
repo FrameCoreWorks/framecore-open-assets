@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.0, 2026-11-12
+
+Trigger: owner request 2026-11-12 to add the new sources from the "Nowe źródła dla Open Assets" research (about 270 sources checked; report in the project files) to the plugin and publish.
+
+- New providers: `archive` (Internet Archive; whitelisted collections only; music, sfx, audio, video), `jukebox` (LoC National Jukebox, recordings before 1923, `review_jurisdiction`), `nasasvs` (NASA SVS stills and videos, `review_nasa`), `metasound` (Meta Open Sound, Oculus Audio Pack, CC BY 4.0 with the fixed credit) and `uisfx` (UI SFX, CC0). 20 providers, 34 provider/category paths.
+- Licence safety: Internet Archive licence labels are declared by the uploader, so the module never searches the whole archive and re-checks the returned `licenseurl` against the policy. GitHub-hosted sources are pinned to reviewed commits.
+- Allowlist: `svs.gsfc.nasa.gov` and `raw.githubusercontent.com` are new (`docs/CLOUD_NETWORK.md`); `archive.org` and the LoC hosts were already listed.
+- Not included, by decision of the research: National Screening Room (MP4 copies mostly over the 32 MiB cap), Citizen DJ (audio on the shared `s3.amazonaws.com` host), Getty, Polona (POST search), National Gallery of Art (CSV only), ESO and ESA/Hubble (feed only), Iconify and Fontsource (need new categories and licence classes). They stay in the report for a separate owner decision.
+- Evidence: live search, download and full decode in a Claude Code cloud container for each new provider (NASA SVS: a still; its videos rarely fit the cap). ChatGPT Work: NOT_RUN. Tests: five new regression tests with trimmed live fixtures.
+
 ## 0.6.0, 2026-11-11
 
 - NASA audio: the existing NASA adapter searches `media_type=audio` (owner decision 2026-11-11, research DR-04), at most three records per search, smallest renditions first, duplicate manifest rows removed; `review_nasa` unchanged. 25 provider/category paths.

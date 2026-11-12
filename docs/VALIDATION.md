@@ -1,5 +1,14 @@
 # Validation
 
+## 0.7.0 source (2026-11-12)
+
+Five new providers from the 2026-11-12 research: `archive`, `jukebox`, `nasasvs`, `metasound`, `uisfx`. Live in a Claude Code
+cloud container (host `claude_code`, open network): each category was searched; `verify` downloaded and fully decoded one
+file per provider (archive: music MP3 3.3 MB, sfx MP3 4.1 MB, video MP4 10.9 MB; jukebox: MP3 3 min; metasound: OGG 1.2 s;
+uisfx: MP3 0.6 s; nasasvs: JPEG 1024x576). NASA SVS photos search returned records; no SVS video within the 32 MiB cap was found for the queries
+tried, and the National Screening Room (films are mostly over the cap) was left out. Hosted ChatGPT Work update, Work
+search/download, Codex and Claude apps: NOT_RUN. `python3 tools/check.py`: see the commit.
+
 ## 0.6.0 source (2026-11-11)
 
 NASA audio added to the existing adapter. `python3 tools/check.py` and `python3 tools/package.py`: see the commit. Live: one audio search and two manifests read on 2026-11-11 (no download). Audio download/decode on a host, ChatGPT Work, Claude and Codex installs: NOT_RUN.

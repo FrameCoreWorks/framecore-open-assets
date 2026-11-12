@@ -20,7 +20,7 @@ Before you start: ChatGPT Work saves plugins only through OpenAI's own **Plugin 
 3. Give Plugin Creator the generated ZIP from code execution, not a ZIP of the whole repository. Verify the returned release, component diagnostics and stored file contents.
 4. Resolve the installed `open-assets` skill in the actual host, then run its runtime `status`.
 
-The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.6.0 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
+The hosted release imported into this repository is 0.2.1 (receipt in `provenance/`). Source 0.7.0 updates that existing identity with its release guard; never create a duplicate. After the hosted update, read back the stored files and record a new receipt.
 
 Ordinary ChatGPT without code execution or permitted network access can plan the work but cannot execute the CLI. Work execution evidence does not establish readiness in another host.
 

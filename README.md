@@ -2,7 +2,7 @@
 
 Standalone asset-sourcing plugin for **ChatGPT Work, Codex and Claude**, maintained by FrameCore Works. Find media through documented public APIs, check each asset's rights, and download verified files with source and attribution records.
 
-**Current plugin version: 0.6.0.** The ChatGPT Work copy is updated from this source; the only stored readback receipt is for 0.2.1 (see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
+**Current plugin version: 0.7.0.** The ChatGPT Work copy is updated from this source; the only stored readback receipt is for 0.2.1 (see [validation](docs/VALIDATION.md)). This repository adds its own installation guide, single-plugin marketplace, validation, reproducible packaging and CI. Creative Studio, FrameCut and FrameCore Works Toolbox (its built-in Earshot capability imports eligible audio) are optional consumers of its provenance records; none is required to run this plugin. Callers can ask for a shared `framecore-task-result/1` envelope and read `capabilities.json` to discover what it offers.
 
 > **Working in a cloud session (Claude Code on the web or phone, a cloud container)?** Media sites are often blocked there by default. Before your first search, ask the assistant to run `runtime.py reach` (or run the command under [If search fails](#if-search-fails)); it shows in a few seconds which providers this environment can reach and prints the list of domains to allow.
 
@@ -39,7 +39,7 @@ python3 plugins/framecore-open-assets/scripts/runtime.py reach
 
 ## Providers and boundaries
 
-The release contains 15 providers and 25 provider/category combinations: Wikimedia Commons, The Met, Cleveland Museum of Art, Rijksmuseum, Library of Congress, NASA, LibriVox, Finna, Wellcome Collection, ambientCG, PhyloPic, Poly Haven, SMK, SFXMint and Incompetech (music by Kevin MacLeod, CC BY 4.0). Each has a separate adapter and rights rules. Broad multi-artist music, recorded SFX and contemporary stock footage remain limited.
+The release contains 20 providers and 34 provider/category combinations: Wikimedia Commons, The Met, Cleveland Museum of Art, Rijksmuseum, Library of Congress, NASA, LibriVox, Finna, Wellcome Collection, ambientCG, PhyloPic, Poly Haven, SMK, SFXMint, Incompetech (music by Kevin MacLeod, CC BY 4.0), the Internet Archive (whitelisted collections: Musopen, netlabels, Open Goldberg Variations, radio aporee field recordings, Sita Sings the Blues), the Library of Congress National Jukebox (recordings before 1923), NASA Scientific Visualization Studio, Meta Open Sound (Oculus Audio Pack, CC BY 4.0) and UI SFX (CC0 interface sounds). Each has a separate adapter and rights rules. Contemporary stock footage, whooshes and risers, creative LUTs and film-grain overlays remain gaps.
 
 The runtime preserves source, creator, licence, attribution, file hash and decoder evidence. It blocks unknown or unsupported rights and checks the current host before routine downloads. Provider eligibility is separate from permission to reuse an individual asset. See the skill and provider dossiers for the operational rules.
 

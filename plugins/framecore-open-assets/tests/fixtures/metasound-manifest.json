@@ -1,0 +1,59 @@
+{
+ "id": "oculus-audio-pack",
+ "samples": [
+  {
+   "file": "UIAlert_CasualMusicalError_OS_01.wav",
+   "original_name": "05_user_interface/ui_casual_musical_error.wav",
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "sample_format": "pcm_s16le",
+   "channels": 1,
+   "duration_s": 1.249
+  },
+  {
+   "file": "UIAlert_CasualPopsError_OS_01.wav",
+   "original_name": "05_user_interface/ui_casual_pops_error.wav",
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "sample_format": "pcm_s16le",
+   "channels": 1,
+   "duration_s": 0.451
+  },
+  {
+   "file": "FEETHmn_ShoeSnowLand_OS_01.wav",
+   "original_name": "02_floors_footsteps_body_mvmt_impacts_actions_etc/footsteps_shoe_snow_land_01.wav",
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "sample_format": "pcm_s16le",
+   "channels": 1,
+   "duration_s": 0.446
+  },
+  {
+   "file": "FEETHmn_ShoeSnowLand_OS_02.wav",
+   "original_name": "02_floors_footsteps_body_mvmt_impacts_actions_etc/footsteps_shoe_snow_land_02.wav",
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "sample_format": "pcm_s16le",
+   "channels": 1,
+   "duration_s": 0.738
+  },
+  {
+   "file": "FEETHmn_ShoeSnowRun_OS_01.wav",
+   "original_name": "02_floors_footsteps_body_mvmt_impacts_actions_etc/footsteps_shoe_snow_run_01.wav",
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "sample_format": "pcm_s16le",
+   "channels": 1,
+   "duration_s": 0.291
+  },
+  {
+   "file": "FEETHmn_ShoeSnowRun_OS_02.wav",
+   "original_name": "02_floors_footsteps_body_mvmt_impacts_actions_etc/footsteps_shoe_snow_run_02.wav",
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "sample_format": "pcm_s16le",
+   "channels": 1,
+   "duration_s": 0.337
+  }
+ ]
+}
