@@ -1,5 +1,9 @@
 # Validation
 
+## 0.8.2 source (2026-11-14)
+
+Fixed bare-invocation welcome; the embedded copy is byte-checked against the asset by `welcome_test.py`. No provider request changed. Hosted ChatGPT Work, Codex and Claude apps: NOT_RUN.
+
 ## 0.8.1 source (2026-11-14)
 
 One warning on every music record (no provider request changed). Offline tests only; live searches not repeated. Hosted ChatGPT Work, Codex and Claude apps: NOT_RUN.

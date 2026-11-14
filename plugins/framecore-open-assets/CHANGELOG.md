@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.2, 2026-11-14
+
+Trigger: owner request 2026-11-14 ("dodać stałe powitanie", then "Rozpisz lepiej każde powitanie. I nie dawaj odnośnika do głównej wtyczki"): a bare invocation got a two-line improvised answer that differed between hosts.
+
+- A fixed English welcome, `skills/open-assets/assets/startup-welcome.en.md`: what Open Assets finds (photos and illustrations, textures and graphics, icons and fonts, music and sound effects, video), the licence record, four example requests and one closing question. No link to another plugin.
+- `SKILL.md` embeds the same text in a new "Welcome" section with the rule: on a bare invocation output only the welcome, copied exactly in English or translated in full into the user's language, then wait.
+- New `tests/welcome_test.py` checks that the embedded block is byte-identical to the asset and keeps its shape; `tools/check.py` runs it.
+- Checks: `tools/check.py` passes. ChatGPT Work, Codex and Claude apps: NOT_RUN.
+
 ## 0.8.1, 2026-11-14
 
 Trigger: the owner's end-to-end test of 2026-11-13: Kevin MacLeod's CC BY 4.0 "Pixelland" (Incompetech) was muted on Pinterest, while only the Incompetech and Internet Archive records warned about Content ID; Commons and National Jukebox music carried no warning.
