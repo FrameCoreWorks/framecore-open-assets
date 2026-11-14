@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 import zipfile
 
-VERSION = '0.8.0'
+VERSION = '0.8.1'
 ROOT = Path(__file__).resolve().parents[1]
 CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/'
 PDM = 'https://creativecommons.org/publicdomain/mark/1.0/'
@@ -272,8 +272,17 @@ def license_policy(value):
     return clean(value) or 'Unknown', 'blocked'
 
 
+MUSIC_PLATFORM_WARNING = ('Platforms (YouTube, TikTok, Instagram, Facebook, Pinterest) detect music automatically and '
+                          'can mute a film or file a claim (Content ID) even under a free licence such as CC BY or '
+                          'public domain, because labels and distributors register catalogues; tell the user before '
+                          'using it in a published film and keep the source page and licence as dispute evidence.')
+
+
 def asset(provider, id, title, creator, source, variants, license_url, category, warnings=None, review=None,
           license_id=None):
+    warnings = list(warnings or [])
+    if category == 'music' and MUSIC_PLATFORM_WARNING not in warnings:
+        warnings.append(MUSIC_PLATFORM_WARNING)
     license_name, status = license_policy(license_id or license_url)
     if review:
         status = review
@@ -282,7 +291,7 @@ def asset(provider, id, title, creator, source, variants, license_url, category,
     return {'schema_version': 1, 'provider': provider, 'id': str(id), 'title': clean(title),
             'creator': clean(creator), 'source_page': source, 'license': license_name,
             'license_url': license_url, 'rights_status': status, 'category': category,
-            'variants': [v for v in variants if v.get('url')], 'warnings': warnings or [],
+            'variants': [v for v in variants if v.get('url')], 'warnings': warnings,
             'attribution': f'{clean(title)} — {clean(creator) or provider}. {source}. {license_name}: {license_url}',
             'retrieved_utc': utc()}
 

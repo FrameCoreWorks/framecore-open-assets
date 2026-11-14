@@ -78,8 +78,9 @@ def search(client, query, category, limit):
         if not variants:
             continue
         warnings = ['The licence is declared by the uploader and is not verified by the Internet Archive; '
-                    'keep the item page and licence URL as evidence.',
-                    'Platform Content ID claims can still occur; the licence URL is the dispute evidence.']
+                    'keep the item page and licence URL as evidence.']
+        if category != 'music':
+            warnings.append('Platform Content ID claims can still occur; the licence URL is the dispute evidence.')
         if category == 'video' and ident == 'Sita_Sings_the_Blues':
             warnings.append('Use the picture only: the Annette Hanshaw songs are licensed separately.')
         if category in ('sfx', 'audio'):

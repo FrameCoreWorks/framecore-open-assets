@@ -102,6 +102,17 @@ class Policies(unittest.TestCase):
     def fixture(name):
         return json.loads((Path(__file__).parent/'fixtures'/name).read_text())
 
+    def test_every_music_record_warns_that_platforms_can_mute_or_claim_it(self):
+        for provider in ('commons','incompetech','archive','jukebox'):
+            item=core.asset(provider,'1','Song','Composer','https://example.org/page',
+                            [core.variant('https://example.org/a.mp3','MP3')],
+                            'https://creativecommons.org/licenses/by/4.0/','music')
+            self.assertEqual(sum('mute' in w and 'claim' in w for w in item['warnings']),1,provider)
+        item=core.asset('commons','2','Photo','Author','https://example.org/page',
+                        [core.variant('https://example.org/a.jpg','JPG')],
+                        'https://creativecommons.org/licenses/by/4.0/','photos')
+        self.assertFalse(any('mute' in w for w in item['warnings']))
+
     def test_archive_returns_only_open_licence_whitelisted_items_and_small_mp3s(self):
         c=Mock();c.policy=core.REGISTRY['archive']
         c.json.side_effect=[self.fixture('archive-search.json'),self.fixture('archive-metadata.json'),

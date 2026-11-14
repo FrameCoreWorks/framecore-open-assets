@@ -42,7 +42,5 @@ def search(client, query, category, limit):
                          [variant(url, 'MP3', duration_seconds=length, **facts)], CC_BY_4, category,
                          ['Credit required: "' + title + ' Kevin MacLeod (incompetech.com) Licensed under '
                           'Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/".',
-                          'The CC BY 4.0 licence is stated site-wide (FAQ), not on each file; keep the source page.',
-                          'Platform Content ID claims by third parties can still occur; the credit and licence are '
-                          'the dispute evidence.']))
+                          'The CC BY 4.0 licence is stated site-wide (FAQ), not on each file; keep the source page.']))
     return out

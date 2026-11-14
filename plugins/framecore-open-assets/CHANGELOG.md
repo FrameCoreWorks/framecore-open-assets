@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.1, 2026-11-14
+
+Trigger: the owner's end-to-end test of 2026-11-13: Kevin MacLeod's CC BY 4.0 "Pixelland" (Incompetech) was muted on Pinterest, while only the Incompetech and Internet Archive records warned about Content ID; Commons and National Jukebox music carried no warning.
+
+- Every `music` record now carries one platform warning, added in `core.asset`: platforms detect music and can mute the film or file a claim even under a free licence; tell the user before it goes into a published film. The Incompetech and Internet Archive music records no longer carry their own Content ID line, so the warning appears once. The skill and the Incompetech dossier say so.
+- Checks: `tools/check.py` passes; new regression test. Live searches: not repeated (no provider request changed). ChatGPT Work, Codex and Claude apps: NOT_RUN.
+
 ## 0.8.0, 2026-11-12
 
 Trigger: owner decision 2026-11-12 ("Tak, dodaj Open Assets, Iconify i Font Source") on the two candidates the 0.7.0 research left for his decision.
