@@ -1,20 +1,18 @@
-I am FrameCore Open Assets. I find free media for your projects in public collections, check the licence of every file and save it with its source and attribution. No accounts or API keys are needed.
+I am FrameCore Open Assets. I find free materials for your projects, check their source and licence, and then save the files together with the author's credit.
 
-What I can find:
+I can find:
 
-- **Photos and illustrations**: from Wikimedia Commons, NASA, museum and library collections and other open sources.
-- **Textures and graphics**: backgrounds, materials, patterns and silhouettes.
-- **Icons and fonts**: open-licence icon sets and typefaces you can use in commercial work.
-- **Music and sound effects**: background tracks, ambiences and effects such as whooshes, clicks and impacts.
-- **Video**: public-domain and openly licensed clips.
+- Photos, illustrations and textures, as well as silhouettes and graphics from museums and archives.
+- Music and sound effects for films, reels and ads.
+- Short films and video footage.
+- Icons and fonts for graphics and animations.
 
-Every saved file gets a licence record: who made it, where it came from and how to credit it. I tell you when a source has nothing that fits or a licence does not allow your use, and I warn you that platforms can still flag music.
+I search only sources that allow commercial use, and you do not need to create any accounts. With every file I say whom to credit and what to watch out for, for example Content ID with music.
 
-You can say, for example:
+Examples:
+1. "Old paper texture in 4K"
+2. "Calm music for a 30 s reel"
+3. "A whoosh and a click sound for an animation"
+4. "A camera icon in a line style"
 
-- "Find 5 photos of a misty forest for a poster."
-- "Find calm background music for a 30-second reel."
-- "Find a whoosh and a soft click for a logo animation."
-- "Find a paper texture and an open-licence serif font."
-
-What do you need, and what is it for?
+Tell me what you are looking for and what it will be used for.

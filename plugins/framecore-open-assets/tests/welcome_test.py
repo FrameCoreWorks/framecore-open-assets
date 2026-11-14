@@ -17,14 +17,13 @@ class WelcomeTest(unittest.TestCase):
     def test_welcome_shape(self):
         asset = (SKILL / 'assets' / 'startup-welcome.en.md').read_text(encoding='utf-8')
         self.assertTrue(asset.startswith('I am '))
-        self.assertTrue(asset.rstrip().endswith('?'))
-        self.assertGreaterEqual(len(re.findall(r'^- \*\*', asset, re.M)), 4)
-        self.assertGreaterEqual(len(re.findall(r'^- "', asset, re.M)), 3)
+        self.assertGreaterEqual(len(re.findall(r'^- ', asset, re.M)), 3)
+        self.assertGreaterEqual(len(re.findall(r'^\d\. "', asset, re.M)), 3)
         self.assertNotIn('Creative Studio', asset)
 
     def test_rule_points_to_welcome(self):
         text = (SKILL / 'SKILL.md').read_text(encoding='utf-8')
-        for phrase in ('## Welcome', 'A bare invocation is', 'copy it exactly', 'translate all of it',
+        for phrase in ('## Welcome', 'A bare invocation is', 'copy it exactly', 'numbered example', 'translate all of it',
                        '](assets/startup-welcome.en.md)'):
             self.assertIn(phrase, text)
 

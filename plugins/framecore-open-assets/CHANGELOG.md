@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.3, 2026-11-14
+
+Trigger: the owner approved ("Tak", 2026-11-14) a fuller welcome text with no link to another plugin; 0.8.2 carried an earlier draft.
+
+- `assets/startup-welcome.en.md` and the embedded copy in `SKILL.md` now hold the approved text: what Open Assets does, four kinds of material, the licence note (commercial-use sources, no accounts, credit and Content ID warnings), four numbered examples and a closing request.
+- `welcome_test.py` checks bullets and numbered examples instead of bold bullets.
+- Checks: `tools/check.py` passes. ChatGPT Work, Codex and Claude apps: NOT_RUN.
+
 ## 0.8.2, 2026-11-14
 
 Trigger: owner request 2026-11-14 ("dodać stałe powitanie", then "Rozpisz lepiej każde powitanie. I nie dawaj odnośnika do głównej wtyczki"): a bare invocation got a two-line improvised answer that differed between hosts.

@@ -1,5 +1,9 @@
 # Validation
 
+## 0.8.3 source (2026-11-14)
+
+Approved welcome text replaces the 0.8.2 draft; same byte check. Hosted ChatGPT Work, Codex and Claude apps: NOT_RUN.
+
 ## 0.8.2 source (2026-11-14)
 
 Fixed bare-invocation welcome; the embedded copy is byte-checked against the asset by `welcome_test.py`. No provider request changed. Hosted ChatGPT Work, Codex and Claude apps: NOT_RUN.
