@@ -27,11 +27,11 @@ Do not commit assets downloaded during tests, credentials, signed readiness reco
 
 ## Release checklist
 
-1. Work on `main` (the FrameCore projects push only `main`, as a fast-forward with no force push) and describe the intended change.
+1. Work on a branch and describe the intended change; it reaches `main` through a pull request merged on green CI, with no force push (owner rule 2026-11-18).
 2. Bump all three plugin manifests, `scripts/core.py`'s version, the standalone marketplace version and package-test expectations together. Preserve all plugin-level default prompts unless their change is requested.
 3. Update the plugin changelog, relevant documentation and meaningful regression tests.
 4. Run `python3 tools/check.py` and build the single-plugin ZIP. Review the diff and archive inventory.
-5. Commit and push the reviewed source to this repository. Tag an approved release only after validation; the initial import does not create an automatic release or deployment.
+5. Commit, push the branch and merge its pull request on green CI. Tag an approved release only after the merge and validation; the initial import does not create an automatic release or deployment.
 6. When a ChatGPT Work update is requested, inspect the currently installed release through Plugin Creator, reconcile changes and update its existing plugin identity with `expected_release_id`. Read back affected source and preserve unrelated metadata and visibility.
 7. Creative Studio no longer maintains its own copy of this plugin once its companion window closes; its registry points to this repository. Never install two copies into the same host.
 
