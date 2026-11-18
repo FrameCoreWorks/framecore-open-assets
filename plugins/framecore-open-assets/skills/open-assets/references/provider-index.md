@@ -24,8 +24,11 @@ Only qualified providers with an observed live search/download/decode are packag
 | NASA Scientific Visualization Studio | photos, video | [nasasvs](providers/nasasvs.md) |
 | Meta Open Sound: Oculus Audio Pack 1 | sfx | [metasound](providers/metasound.md) |
 | UI SFX (CC0 interface sounds) | sfx | [uisfx](providers/uisfx.md) |
+| Kenney audio packs (CC0, GitHub mirrors) | sfx | [kenney](providers/kenney.md) |
+| SFX Kit (Wyzowl, CC0 video sound effects) | sfx | [sfxkit](providers/sfxkit.md) |
+| Adbertiser SFX (CC0 sound effects for reels) | sfx | [adbertiser](providers/adbertiser.md) |
 
-Twenty-two providers, thirty-six confirmed media paths. LoC is limited to dedicated Gottlieb photographs; Rijksmuseum to explicit PDM/CC0 image records. NASA supplies photos/video. Incompetech adds one composer's CC BY catalogue with BPM and mood; broader music and recorded SFX remain gaps. 0.7.0 adds the Internet Archive (only reviewed collections; uploader-declared licences), the National Jukebox (US-only, review gate), NASA SVS (review gate), Meta Open Sound (CC BY 4.0, fixed credit) and UI SFX (CC0). 0.8.0 adds Iconify (category icons) and Fontsource (category fonts).
+Twenty-five providers, thirty-nine confirmed media paths. LoC is limited to dedicated Gottlieb photographs; Rijksmuseum to explicit PDM/CC0 image records. NASA supplies photos/video. Incompetech adds one composer's CC BY catalogue with BPM and mood; broader music and recorded SFX remain gaps. 0.7.0 adds the Internet Archive (only reviewed collections; uploader-declared licences), the National Jukebox (US-only, review gate), NASA SVS (review gate), Meta Open Sound (CC BY 4.0, fixed credit) and UI SFX (CC0). 0.8.0 adds Iconify (category icons) and Fontsource (category fonts). 0.9.0 adds Kenney's CC0 audio packs (467 short game SFX: impacts, glitches, UI, sci-fi, foley) through pinned GitHub mirrors, SFX Kit (320 CC0 video SFX with sync points) and Adbertiser SFX (408 CC0 reel SFX): whooshes, risers, cinematic hits, typing and glitches are now covered. OpenGameArt was checked and left out: its robots.txt disallows Claude and other AI agents on the whole site.
 
 Work search/download evidence is dated 2026-10-28; installed-client behavior in Codex/Claude remains NOT_RUN. Every new host/category still verifies its first actual file. A successful sample cannot guarantee future availability or every catalogue item.
 
