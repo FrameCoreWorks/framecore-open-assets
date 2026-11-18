@@ -1,0 +1,382 @@
+{
+ "name": "SFX Kit",
+ "version": "1.0.0",
+ "license": "CC0-1.0",
+ "sounds": [
+  {
+   "id": "whoosh-fast-hard",
+   "name": "Whoosh, fast and hard",
+   "category": "whooshes",
+   "file": "sounds/whooshes/whoosh-fast-hard.wav",
+   "variant": {
+    "speed": "fast",
+    "intensity": "hard"
+   },
+   "description": "A fast, crisp whip of air with a bright edge and a little push behind it.",
+   "use_for": [
+    "Whip pans",
+    "Fast cuts between scenes",
+    "Quick zooms",
+    "Energetic social edits"
+   ],
+   "avoid_for": [
+    "Calm or corporate pieces",
+    "Small UI details",
+    "On top of speech: use a softer one"
+   ],
+   "tags": [
+    "whoosh",
+    "swish",
+    "transition",
+    "movement",
+    "air",
+    "natural",
+    "quick",
+    "strong"
+   ],
+   "duration": 0.252,
+   "channels": 2,
+   "sync": {
+    "at": 0.092,
+    "meets": "move-peak",
+    "how": "Ease-in-out: put the sync point at the middle of the move. Ease-out (fast start, slowing to a stop): about a quarter of the way in. Ease-in (slow start, fast exit): about three quarters of the way in."
+   },
+   "timing": {
+    "audible_start": 0.008,
+    "onset": 0.055,
+    "peak": 0.092,
+    "body_end": 0.15,
+    "audible_end": 0.236
+   },
+   "fits_seconds": [
+    0.12,
+    0.44
+   ],
+   "level": {
+    "lufs": -17,
+    "true_peak_dbtp": -3.7,
+    "tier": "hard"
+   },
+   "under_voiceover_db": -4,
+   "adapt": {
+    "rate": [
+     0.85,
+     1.2
+    ],
+    "notes": "To fit a move up to about 15% shorter or 20% longer, play it faster or slower (its pitch moves with it); beyond that, use the next speed. Adjust level with gain, but for a clearly softer or harder sound use the other intensity rather than a big gain change."
+   },
+   "pairs_with": [
+    {
+     "category": "impacts",
+     "how": "Something landing: the whoosh on the move (its sync point at the move's fastest point) and the impact on the frame it lands. A whoosh that suits the move's length dies away just before the landing; use one a step softer than the impact."
+    },
+    {
+     "category": "pops",
+     "how": "Something arriving and appearing: the whoosh during the move, the pop as it lands, at a lower gain than the whoosh."
+    },
+    {
+     "category": "shimmers",
+     "how": "A reveal: the whoosh into the reveal, the shimmer starting at the whoosh's sync point."
+    }
+   ],
+   "character": "balanced, airy",
+   "sha256": "c215bf14e1a09401f07869ed20f38f272681fbfbf176f1eaeba5a039d25006cd"
+  },
+  {
+   "id": "reverse-whoosh-long-soft",
+   "name": "Reverse whoosh, long and soft",
+   "category": "reverse-whooshes",
+   "file": "sounds/reverse-whooshes/reverse-whoosh-long-soft.wav",
+   "variant": {
+    "length": "long",
+    "intensity": "soft"
+   },
+   "description": "A long soft reverse whoosh: air drawn in, building to a sudden stop.",
+   "use_for": [
+    "Something collapsing or shrinking into a point",
+    "The build into a hard cut, a hit or a reveal",
+    "An element pulled back into a button or icon",
+    "A slow pull before a big moment"
+   ],
+   "avoid_for": [
+    "Moments that should land softly (it stops dead)",
+    "Big, energetic moments (use strong)"
+   ],
+   "tags": [
+    "reverse",
+    "whoosh",
+    "suck",
+    "build",
+    "collapse",
+    "air",
+    "long",
+    "soft",
+    "natural"
+   ],
+   "duration": 1.353,
+   "channels": 2,
+   "sync": {
+    "at": 1.192,
+    "meets": "arrival",
+    "how": "Place it so its end (the sync point) lands on the moment of collapse, the cut or the hit: start = that moment − sync.at."
+   },
+   "timing": {
+    "audible_start": 0.148,
+    "onset": 0.607,
+    "peak": 1.192,
+    "body_end": 1.209,
+    "audible_end": 1.332
+   },
+   "span_seconds": 1.044,
+   "fits_seconds": [
+    0.91,
+    1.23
+   ],
+   "level": {
+    "lufs": -24,
+    "true_peak_dbtp": -17.7,
+    "tier": "soft"
+   },
+   "under_voiceover_db": -3,
+   "adapt": {
+    "rate": [
+     0.85,
+     1.15
+    ],
+    "notes": "For other lengths, pick the nearest one and trim its quiet start rather than changing the rate."
+   },
+   "pairs_with": [
+    {
+     "category": "impacts",
+     "how": "A pull into a hit: the reverse whoosh, its end on the impact's sync point."
+    },
+    {
+     "category": "booms-and-bass",
+     "how": "A big moment: the reverse whoosh into a boom starting on its sync point."
+    },
+    {
+     "category": "pops",
+     "how": "Something sucked into a point and gone: the reverse whoosh with a small pop out at its end, at −6 dB."
+    }
+   ],
+   "character": "soft, airy pull to a stop",
+   "sha256": "f619338ddc12bf552a14a443e47bff0b9a374bfef35c631df405c4665b5bc088"
+  },
+  {
+   "id": "riser-1s-soft",
+   "name": "Riser, 1 s, soft",
+   "category": "risers-and-fallers",
+   "file": "sounds/risers-and-fallers/riser-1s-soft.wav",
+   "variant": {
+    "direction": "rise",
+    "length": "1s",
+    "intensity": "soft"
+   },
+   "description": "A 1-second soft, airy rise that builds to its peak at the end.",
+   "use_for": [
+    "Building up to a reveal: a logo, a product, a big number",
+    "Leading into a new section",
+    "A short lift before something appears"
+   ],
+   "avoid_for": [
+    "Reveals that land before the rise ends: the peak is at its end",
+    "Big, energetic moments (use strong)"
+   ],
+   "tags": [
+    "riser",
+    "build",
+    "swell",
+    "1s",
+    "soft",
+    "air",
+    "natural"
+   ],
+   "duration": 1.19,
+   "channels": 2,
+   "sync": {
+    "at": 0.982,
+    "meets": "arrival",
+    "how": "Place it so its end (the sync point) lands on the reveal: start = reveal − sync.at."
+   },
+   "timing": {
+    "audible_start": 0.08,
+    "onset": 0.485,
+    "peak": 0.982,
+    "body_end": 1.083,
+    "audible_end": 1.167
+   },
+   "span_seconds": 0.902,
+   "fits_seconds": [
+    0.82,
+    1
+   ],
+   "level": {
+    "lufs": -24,
+    "true_peak_dbtp": -18.1,
+    "tier": "soft"
+   },
+   "under_voiceover_db": -3,
+   "adapt": {
+    "rate": [
+     0.9,
+     1.1
+    ],
+    "notes": "For other lengths, change the rate a little (its pitch moves with it), or take the next longer one and trim its quiet start (risers) or its quiet end (fallers)."
+   },
+   "pairs_with": [
+    {
+     "category": "impacts",
+     "how": "A reveal with weight: the rise into an impact on the reveal frame."
+    },
+    {
+     "category": "shimmers",
+     "how": "A bright reveal: the rise into a shimmer starting at its sync point."
+    },
+    {
+     "category": "booms-and-bass",
+     "how": "A big reveal: the rise into a boom on the reveal frame."
+    }
+   ],
+   "character": "soft, airy rise",
+   "sha256": "fca1d503b69d4ac32cd7f307cf497fa36c2db8589b878b075c8d372ac3f4fe61"
+  },
+  {
+   "id": "keyboard-typing-quick-short",
+   "name": "Typing, quick, short",
+   "category": "keyboard",
+   "file": "sounds/keyboard/keyboard-typing-quick-short.wav",
+   "variant": {
+    "pace": "quick",
+    "length": "short"
+   },
+   "description": "A quick burst of typing: a word or two.",
+   "use_for": [
+    "Text being typed into a field or document",
+    "Typing that lasts about 0.75 seconds",
+    "Fast, confident typing: search boxes, chat"
+   ],
+   "avoid_for": [
+    "Text that appears all at once (use a single key or nothing)",
+    "Typing much longer than the run: loop a medium run instead of stretching it"
+   ],
+   "tags": [
+    "keyboard",
+    "typing",
+    "key",
+    "quick",
+    "short",
+    "natural"
+   ],
+   "duration": 0.73,
+   "channels": 1,
+   "sync": {
+    "at": 0,
+    "meets": "action-start",
+    "how": "Start the run so its onset (timing.onset) meets the first character; it doesn't need to match every character exactly, only the rhythm."
+   },
+   "timing": {
+    "audible_start": 0,
+    "onset": 0,
+    "peak": 0.525,
+    "body_end": 0.641,
+    "audible_end": 0.728
+   },
+   "span_seconds": 0.641,
+   "fits_seconds": [
+    0.58,
+    0.71
+   ],
+   "level": {
+    "lufs": -27,
+    "true_peak_dbtp": -14,
+    "tier": "typing"
+   },
+   "under_voiceover_db": -1,
+   "adapt": {
+    "rate": [
+     0.9,
+     1.1
+    ],
+    "notes": "To cover longer text, chain runs with a short gap, or loop a medium run; fade the end out over the last 50 ms."
+   },
+   "pairs_with": [
+    {
+     "category": "interface",
+     "how": "Pressing Enter to send or submit: the Return key, then a button click 80–150 ms later."
+    },
+    {
+     "category": "notifications",
+     "how": "A message being typed and sent: the typing run, then a message-out sound."
+    }
+   ],
+   "character": "quick, 11 keys a second",
+   "sha256": "814d1ebe089ec3757cf6d33011d64afa54582d01102220a420a34b98ae78477f"
+  },
+  {
+   "id": "digital-glitch-clear",
+   "name": "Glitch, clear",
+   "category": "digital",
+   "file": "sounds/digital/digital-glitch-clear.wav",
+   "variant": {
+    "kind": "glitch",
+    "intensity": "clear"
+   },
+   "description": "A crisp little glitch, stepping in pitch.",
+   "use_for": [
+    "A digital error or interference",
+    "A screen or text glitching",
+    "Switching between digital states"
+   ],
+   "avoid_for": [
+    "Natural, physical subjects (use foley, impacts or whooshes)",
+    "Quiet, delicate scenes (use subtle)"
+   ],
+   "tags": [
+    "digital",
+    "glitch",
+    "clear",
+    "tech",
+    "data"
+   ],
+   "duration": 0.24,
+   "channels": 1,
+   "sync": {
+    "at": 0.018,
+    "meets": "instant",
+    "how": "Sync point on the frame it happens."
+   },
+   "timing": {
+    "audible_start": 0,
+    "onset": 0,
+    "peak": 0.018,
+    "body_end": 0.238,
+    "audible_end": 0.24
+   },
+   "level": {
+    "lufs": -22,
+    "true_peak_dbtp": -17.8,
+    "tier": "clear"
+   },
+   "under_voiceover_db": -2,
+   "adapt": {
+    "rate": [
+     0.9,
+     1.15
+    ],
+    "notes": "Rate changes shift the pitch; small changes are fine."
+   },
+   "pairs_with": [
+    {
+     "category": "notifications",
+     "how": "A process that finishes: the process run, then a success or error notification at its end."
+    },
+    {
+     "category": "whooshes",
+     "how": "A digital transition: a soft whoosh with a glitch at its sync point, −6 dB."
+    }
+   ],
+   "character": "clear, clean digital",
+   "sha256": "0160031c5dd4e4c047224b2c0f79e822e7589d91e98dc321f1f79360ff8752f8"
+  }
+ ]
+}

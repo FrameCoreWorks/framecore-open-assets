@@ -32,8 +32,8 @@ class Package(unittest.TestCase):
 
     def test_every_packaged_provider_is_qualified_and_implemented(self):
         data=json.loads((ROOT/'providers.json').read_text())
-        self.assertEqual(len(data),23)
-        self.assertEqual(sum(len(r['categories']) for r in data.values()),37)
+        self.assertEqual(len(data),25)
+        self.assertEqual(sum(len(r['categories']) for r in data.values()),39)
         self.assertEqual({p.stem for p in (ROOT/'scripts/providers').glob('*.py') if p.stem != '__init__'},set(data))
         self.assertEqual({p.stem for p in (ROOT/'skills/open-assets/references/providers').glob('*.md')},set(data))
         for id,r in data.items():

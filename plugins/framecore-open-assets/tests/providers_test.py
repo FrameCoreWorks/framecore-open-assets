@@ -200,6 +200,23 @@ class Policies(unittest.TestCase):
         self.assertEqual(runtime.search_one(c,'dragon','sfx',5),[])
         c.get.assert_not_called();c.json.assert_not_called()
 
+    def test_sfxkit_and_adbertiser_rank_reel_words_and_pin_urls(self):
+        fx=Path(__file__).parent/'fixtures'
+        for pid,fixture,pin,query,first in (
+                ('sfxkit','sfxkit-sounds.json','92780e7ab0cdfb557497a988089c47f46e8c7412','whoosh','whoosh-fast-hard'),
+                ('adbertiser','adbertiser-catalog.json','ed6482ebd9c1283db4ee11b69dba3426c7dd5046','whoosh','whoosh_fast_1')):
+            c=Mock();c.policy=core.REGISTRY[pid];c.json.return_value=json.loads((fx/fixture).read_text())
+            items=runtime.search_one(c,query,'sfx',5)
+            self.assertEqual(items[0]['id'],first,pid)
+            self.assertEqual((items[0]['license'],items[0]['rights_status']),('CC0','eligible'))
+            self.assertIn(pin,items[0]['variants'][0]['url'],'URLs are pinned to the reviewed commit')
+            self.assertTrue(items[0]['variants'][0]['url'].endswith('.wav'))
+            self.assertTrue(runtime.search_one(c,'riser','sfx',5)[0]['id'].startswith('riser'))
+            self.assertEqual(runtime.search_one(c,'dragon','sfx',5),[])
+        c=Mock();c.policy=core.REGISTRY['sfxkit'];c.json.return_value=json.loads((fx/'sfxkit-sounds.json').read_text())
+        item=runtime.search_one(c,'whoosh','sfx',1)[0]
+        self.assertTrue(any(w.startswith('Sync point') for w in item['warnings']))
+
     # 0.8.0: icons and fonts (owner decision 2026-11-12). Fixtures are trimmed live responses; no network.
     def test_software_licences_are_accepted_only_with_an_author_and_gpl_nc_stay_blocked(self):
         self.assertEqual(core.license_policy('MIT'),('MIT','eligible'))

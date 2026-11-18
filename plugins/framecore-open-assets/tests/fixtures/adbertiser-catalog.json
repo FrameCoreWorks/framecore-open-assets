@@ -1,0 +1,67 @@
+[
+ {
+  "name": "whoosh_fast_1",
+  "category": "whoosh",
+  "file": "sounds/whoosh/whoosh_fast_1.wav",
+  "duration": 0.282,
+  "channels": 2,
+  "tags": [
+   "fast",
+   "cut",
+   "transition"
+  ],
+  "description": "Quick air pass for fast cuts"
+ },
+ {
+  "name": "riser_long_1",
+  "category": "riser",
+  "file": "sounds/riser/riser_long_1.wav",
+  "duration": 3.707,
+  "channels": 2,
+  "tags": [
+   "riser",
+   "long",
+   "tension"
+  ],
+  "description": "Three-second tension build"
+ },
+ {
+  "name": "ghost_whoosh",
+  "category": "horror",
+  "file": "sounds/horror/ghost_whoosh.wav",
+  "duration": 3.566,
+  "channels": 2,
+  "tags": [
+   "ghost",
+   "spooky",
+   "whoosh"
+  ],
+  "description": "Ghostly moaning whoosh"
+ },
+ {
+  "name": "typing_1",
+  "category": "typing",
+  "file": "sounds/typing/typing_1.wav",
+  "duration": 1.622,
+  "channels": 1,
+  "tags": [
+   "typing",
+   "keyboard",
+   "mechanical"
+  ],
+  "description": "Mechanical keyboard typing"
+ },
+ {
+  "name": "glitch_1",
+  "category": "glitch",
+  "file": "sounds/glitch/glitch_1.wav",
+  "duration": 0.459,
+  "channels": 2,
+  "tags": [
+   "glitch",
+   "digital",
+   "error"
+  ],
+  "description": "Digital glitch burst"
+ }
+]

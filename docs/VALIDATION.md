@@ -2,7 +2,7 @@
 
 ## 0.9.0 source (2026-11-18)
 
-New provider `kenney` (six Kenney CC0 audio packs, 467 files, through GitHub mirrors pinned to reviewed commits; kenney.nl is not contacted). Live in a Claude Code cloud session on 2026-11-18: "glitch" search and verify (WAV 0.02 s) and "impact metal" search and download (OGG 0.17 s), both fully decoded, CC0, eligible. `tools/check.py` passes. OpenGameArt was not added: its robots.txt disallows Claude and other AI agents on the whole site. Sonniss GDC bundles were not added: multi-gigabyte ZIP parts only, and the licence bars supplying the sounds as a service. ChatGPT Work, Codex and Claude apps: NOT_RUN.
+New providers `sfxkit` (Wyzowl SFX Kit, 320 CC0 files) and `adbertiser` (Adbertiser SFX, 408 CC0 files), each read from its pinned `raw.githubusercontent.com` catalogue: "whoosh", "riser", "cinematic hit", "typing", "glitch" and "money" returned matching records, and one WAV per provider was verified and downloaded (0.25 s, 1.3 s), fully decoded. New provider `kenney` (six Kenney CC0 audio packs, 467 files, through GitHub mirrors pinned to reviewed commits; kenney.nl is not contacted). Live in a Claude Code cloud session on 2026-11-18: "glitch" search and verify (WAV 0.02 s) and "impact metal" search and download (OGG 0.17 s), both fully decoded, CC0, eligible. `tools/check.py` passes. OpenGameArt was not added: its robots.txt disallows Claude and other AI agents on the whole site. Sonniss GDC bundles were not added: multi-gigabyte ZIP parts only, and the licence bars supplying the sounds as a service. ChatGPT Work, Codex and Claude apps: NOT_RUN.
 
 ## 0.8.3 source (2026-11-14)
 
