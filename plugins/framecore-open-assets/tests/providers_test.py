@@ -182,6 +182,24 @@ class Policies(unittest.TestCase):
         self.assertEqual(len(item['variants']),12)
         self.assertIn('9950fe66f993a6660dab9c2651dcbcd899ffd83b',item['variants'][0]['url'])
 
+    # 0.9.0: Kenney CC0 packs through pinned GitHub mirrors; the file index is embedded, so search makes no request.
+    def test_kenney_searches_the_embedded_index_with_reel_synonyms_and_pinned_mirror_urls(self):
+        from providers import kenney
+        c=Mock();c.policy=core.REGISTRY['kenney']
+        self.assertEqual(sum(len(p[5].split()) for p in kenney.PACKS),467)
+        items=runtime.search_one(c,'impact metal','sfx',3)
+        self.assertEqual(items[0]['id'],'impact-sounds/impact_metal_heavy')
+        self.assertEqual((items[0]['license'],items[0]['rights_status'],items[0]['creator']),('CC0','eligible','Kenney (kenney.nl)'))
+        self.assertIn('999dd1684873f8b020a3aa5b26e713da21688924',items[0]['variants'][0]['url'],'URLs are pinned to the reviewed commit')
+        self.assertTrue(all(v['url'].startswith('https://raw.githubusercontent.com/') for i in items for v in i['variants']))
+        self.assertNotIn('kenney.nl/',' '.join(v['url'] for i in items for v in i['variants']))
+        self.assertEqual(runtime.search_one(c,'glitch','sfx',1)[0]['id'],'interface-sounds/glitch')
+        typing=runtime.search_one(c,'typing','sfx',3)
+        self.assertTrue(typing and all(i['id'].split('/')[1] in {'click','switch','tick','mouseclick'} for i in typing))
+        self.assertTrue(any('Approximate match' in w for w in typing[0]['warnings']))
+        self.assertEqual(runtime.search_one(c,'dragon','sfx',5),[])
+        c.get.assert_not_called();c.json.assert_not_called()
+
     # 0.8.0: icons and fonts (owner decision 2026-11-12). Fixtures are trimmed live responses; no network.
     def test_software_licences_are_accepted_only_with_an_author_and_gpl_nc_stay_blocked(self):
         self.assertEqual(core.license_policy('MIT'),('MIT','eligible'))

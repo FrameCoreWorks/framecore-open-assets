@@ -405,5 +405,22 @@
     "reference": "skills/open-assets/references/providers/fontsource.md",
     "smoke_query": "oxanium polish",
     "smoke_category": "fonts"
+  },
+  "kenney": {
+    "name": "Kenney audio packs (CC0, GitHub mirrors)",
+    "policy": "documented",
+    "reason": "",
+    "module": "kenney",
+    "categories": [
+      "sfx"
+    ],
+    "allowed_domains": [
+      "raw.githubusercontent.com"
+    ],
+    "min_interval_seconds": 1,
+    "sources_read": "2026-11-18",
+    "reference": "skills/open-assets/references/providers/kenney.md",
+    "smoke_query": "impact metal",
+    "smoke_category": "sfx"
   }
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0, 2026-11-18
+
+Trigger: owner request 2026-11-18 ("Dodaj jak najwięcej efektów Kenney, OpenGameArt", "sprawdź Sonniss") to cover sound effects for reels in any format; the gaps came from the 2026-11-18 review of a third-party SFX library (impact, glitch, riser, whoosh).
+
+- New provider `kenney`: six Kenney CC0 audio packs (UI Audio, Interface Sounds, Impact Sounds, Sci-Fi Sounds, Digital Audio, RPG Audio), 467 files, read from GitHub mirrors pinned to the reviewed commits. kenney.nl disallows AI agents in its robots.txt, so the module never contacts it; CC0 allows redistribution. File names are embedded in the module, so a search makes no request; a small synonym map covers reel vocabulary, and synonym-only matches for riser, transition, glitch and typing carry an "approximate match" warning. No audio files are added to the repository. 23 providers, 37 provider/category paths. No new network host.
+- Not added: OpenGameArt (robots.txt disallows Claude, Claude Code, Codex and other agents on the whole site) and the Sonniss GDC bundles (commercial use without credit is allowed, but only as multi-gigabyte ZIP parts, and the licence bars supplying the sounds as a service).
+- Checks: `tools/check.py` passes; new regression test. Live search, verify and download in Claude Code cloud. ChatGPT Work, Codex and Claude apps: NOT_RUN.
+
 ## 0.8.3, 2026-11-14
 
 Trigger: the owner approved ("Tak", 2026-11-14) a fuller welcome text with no link to another plugin; 0.8.2 carried an earlier draft.
