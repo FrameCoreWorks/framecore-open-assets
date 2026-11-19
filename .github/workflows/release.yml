@@ -1,7 +1,7 @@
-name: Release after green CI
+name: Tag and release after green CI
 
-# Continuous delivery: when the CI workflow succeeds on a push to main, tag the plugin version and publish a GitHub
-# release for that exact commit. A version that is already released is left alone, so only a version bump releases.
+# After CI passes on main, create the tag v<version> and a GitHub Release
+# when that version has no tag yet. Nothing is published for an unchanged version.
 on:
   workflow_run:
     workflows: ["Validate plugin"]
@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: release-${{ github.repository }}
+  group: tag-and-release
   cancel-in-progress: false
 
 jobs:
@@ -21,20 +21,19 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0 (Node 24)
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
           persist-credentials: false
-      - name: Tag and publish the version if it is new
+      - name: Create the tag and release for a new version
         env:
           GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
           SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
-          v=$(python3 -c "import json; print(json.load(open('plugins/framecore-open-assets/plugin.json'))['version'])")
-          if gh release view "v$v" >/dev/null 2>&1; then
-            echo "::notice::v$v is already released; nothing to publish for $SHA"
-          else
-            gh release create "v$v" --target "$SHA" --title "v$v" --generate-notes
-            echo "::notice::Published v$v from $SHA"
+          version=$(python3 -c "import json; print(json.load(open('plugins/framecore-open-assets/.claude-plugin/plugin.json'))['version'])")
+          tag="v$version"
+          if gh release view "$tag" >/dev/null 2>&1 || git ls-remote --exit-code --tags "https://github.com/${GITHUB_REPOSITORY}.git" "refs/tags/$tag" >/dev/null 2>&1; then
+            echo "::notice::$tag already exists, nothing to publish"
+            exit 0
           fi
+          gh release create "$tag" --target "$SHA" --title "$tag" --generate-notes
