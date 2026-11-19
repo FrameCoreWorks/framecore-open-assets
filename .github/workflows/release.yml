@@ -1,0 +1,40 @@
+name: Release after green CI
+
+# Continuous delivery: when the CI workflow succeeds on a push to main, tag the plugin version and publish a GitHub
+# release for that exact commit. A version that is already released is left alone, so only a version bump releases.
+on:
+  workflow_run:
+    workflows: ["Validate plugin"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0 (Node 24)
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - name: Tag and publish the version if it is new
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          v=$(python3 -c "import json; print(json.load(open('plugins/framecore-open-assets/plugin.json'))['version'])")
+          if gh release view "v$v" >/dev/null 2>&1; then
+            echo "::notice::v$v is already released; nothing to publish for $SHA"
+          else
+            gh release create "v$v" --target "$SHA" --title "v$v" --generate-notes
+            echo "::notice::Published v$v from $SHA"
+          fi
